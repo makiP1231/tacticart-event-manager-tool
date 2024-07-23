@@ -1,0 +1,86 @@
+.admin-profile-edit-container {
+    width: 600px;
+    margin: 20px auto;
+    height: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+  
+.admin-profile-edit-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+  
+.admin-profile-edit-container form {
+    display: flex;
+    flex-direction: column;
+}
+  
+.admin-profile-edit-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333333;
+}
+  
+.admin-profile-edit-container input[type="text"],
+.admin-profile-edit-container input[type="email"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+  
+.admin-profile-edit-container button {
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+  
+.admin-profile-edit-container button:hover {
+    background-color: #439b46;
+}
+  
+/* Error Message */
+.admin-profile-edit-container p {
+    color: red;
+    text-align: center;
+}
+  
+/* Profile Picture Section */
+.admin-profile-edit-container .profile-picture-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.admin-profile-edit-container .profile-picture-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.admin-profile-edit-container .profile-picture-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.admin-profile-edit-container .profile-picture-button:hover {
+    background-color: #0056b3;
+}

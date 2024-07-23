@@ -1,0 +1,95 @@
+.option-edit-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 500px;
+    height: 100%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.option-edit-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.option-edit-container .message {
+    color: green;
+    margin-bottom: 20px;
+}
+
+.option-edit-container .option-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.option-edit-container .option-form label {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.option-edit-container .option-form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.option-edit-container .option-form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.option-edit-container .option-form button:hover {
+    background-color: #45a049;
+}
+
+.option-edit-container .option-list {
+    width: 100%;
+}
+
+.option-edit-container .option-list h2 {
+    margin-bottom: 10px;
+}
+
+.option-edit-container .option-list .option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.option-edit-container .option-list .option-item button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.option-edit-container .option-list .option-item button:hover {
+    background-color: #e53935;
+}
+
+.option-edit-container .back-button {
+    position: absolute;
+    bottom: -55px;
+    left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

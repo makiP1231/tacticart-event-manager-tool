@@ -1,0 +1,86 @@
+.event-casting-container {
+    padding: 20px;
+    width: 80%;
+    margin: 20px auto 20px auto; 
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.event-casting-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.event-casting-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-casting-container .casting-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.event-casting-container .casting-item {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.event-casting-container .casting-item label {
+    min-width: 60px; /* ラベルの最小幅を拡大 */
+    font-weight: bold;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.event-casting-container .casting-item input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 2; /* 入力エリアを広げる */
+}
+
+.event-casting-container .move-button,
+.event-casting-container .delete-button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.event-casting-container .add-casting-button {
+    background-color: #4CAF50; /* 追加ボタンの色 */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.event-casting-container .submit-button {
+    background-color: #2196F3; /* 保存ボタンの色 */
+    color: white;
+    align-self: center;
+    padding: 15px 30px 15px 30px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.event-casting-container .delete-button {
+    background-color: #f44336; /* 削除ボタンの色 */
+    color: white;
+}
+
+.event-casting-container .move-button {
+    background-color: #4CAF50; /* 移動ボタンの色 */
+}

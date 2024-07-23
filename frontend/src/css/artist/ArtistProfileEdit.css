@@ -1,0 +1,318 @@
+.artist-profile-edit-container {
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.artist-profile-edit-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.artist-profile-edit-container p {
+    text-align: center;
+    font-size: 12px;
+    margin: -10px 0 10px 0;
+}
+
+.artist-profile-edit-container .email-error {
+    text-align: center;
+    font-size: 12px;
+    margin: -10px 0 10px 0;
+}
+
+.artist-profile-edit-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.artist-profile-edit-container .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.artist-profile-edit-container .form-group-textarea {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.artist-profile-edit-container .form-group label,
+.artist-profile-edit-container .form-group-textarea label {
+    width: 135px;
+    font-size: 14px;
+    color: #333333;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.artist-profile-edit-container input[type="text"],
+.artist-profile-edit-container input[type="email"],
+.artist-profile-edit-container input[type="date"],
+.artist-profile-edit-container input[type="file"],
+.artist-profile-edit-container textarea {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.artist-profile-edit-container select {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.artist-profile-edit-container .gender-selects {
+    width: 100px;
+}
+
+.artist-profile-edit-container .birthday-set {
+    width: 100px;
+    margin-right: 5px;
+}
+
+.artist-profile-edit-container textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.artist-profile-edit-container .profile-links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.artist-profile-edit-container .profile-links button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.artist-profile-edit-container .profile-links button:hover {
+    background-color: #218838;
+}
+
+.artist-profile-edit-container .profile-links button:nth-child(2) {
+    background-color: #ffc107;
+}
+
+.artist-profile-edit-container .profile-links button:nth-child(2):hover {
+    background-color: #e0a800;
+}
+
+.artist-profile-edit-container .profile-links button:nth-child(3) {
+    background-color: #17a2b8;
+}
+
+.artist-profile-edit-container .profile-links button:nth-child(3):hover {
+    background-color: #138496;
+}
+
+.artist-profile-edit-container .profile-picture-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.artist-profile-edit-container .profile-picture-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.artist-profile-edit-container .profile-picture-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.artist-profile-edit-container .profile-picture-placeholder {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+}
+
+.artist-profile-edit-container .profile-picture-placeholder.male {
+    background-color: #cce5ff;
+}
+
+.artist-profile-edit-container .profile-picture-placeholder.female {
+    background-color: #f8d7da;
+}
+
+.artist-profile-edit-container .profile-picture-placeholder.unknown {
+    background-color: #e2e3e5;
+}
+
+.artist-profile-edit-container .profile-picture-button {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.artist-profile-edit-container .profile-picture-button:hover {
+    background-color: #0056b3;
+}
+
+.artist-profile-edit-container .delete-profile-picture {
+    display: inline-block;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.artist-profile-edit-container .delete-profile-picture:hover {
+    text-decoration: underline;
+}
+
+
+.artist-profile-edit-container .profile-submit-btn {
+    padding: 5px;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.artist-profile-edit-container .parts-display-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.artist-profile-edit-container .parts-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.artist-profile-edit-container .part-badge {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 2px 15px;
+    border-radius: 15px;
+    font-size: 11px;
+}
+
+.artist-profile-edit-container .edit-parts-button {
+    padding: 2px 15px;
+    background-color: #666;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.artist-profile-edit-container .parts-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.artist-profile-edit-container .parts-modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.artist-profile-edit-container .parts-modal h2 {
+    text-align: center;
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.artist-profile-edit-container .parts-modal p {
+    font-size: 12px;
+    text-align: center;
+}
+
+.artist-profile-edit-container .part-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.artist-profile-edit-container .part-checkboxes label {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #dddddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.artist-profile-edit-container .part-checkboxes .main-part {
+    background-color: #007bff;
+    color: white;
+}
+
+.artist-profile-edit-container .part-checkboxes .sub-part {
+    background-color: #1e8bff;
+    color: white;
+}
+
+.artist-profile-edit-container .part-checkboxes .reset-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.artist-profile-edit-container .parts-modal .close-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 5px 15px;
+    background-color: #333333;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.artist-profile-edit-container .parts-modal .close-button:hover {
+    background-color: #272727;
+}

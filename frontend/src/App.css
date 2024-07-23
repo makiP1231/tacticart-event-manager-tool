@@ -1,0 +1,31 @@
+.App {
+  text-align: center;
+  font-family: 'Arial', sans-serif; /* フォント統一 */
+  color: #333; /* テキストカラーを濃いグレーに */
+}
+
+.App-header {
+  background-color: #f5f5f5; /* ヘッダーと同じ背景色 */
+  padding: 10px 0;
+  width: 100%; /* フル幅 */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between; /* 中央寄せから左右に内容を分散 */
+  align-items: center;
+  font-size: 1em; /* フォントサイズ調整 */
+}
+
+.App-link {
+  color: #008000; /* アプリ内リンクも差し色に濃い緑 */
+  text-decoration: none;
+}
+
+.App-link:hover {
+  text-decoration: underline; /* ホバー時にアンダーライン */
+}
+
+button {
+  border: none;
+  color: white;
+  border-radius: 5px;
+}

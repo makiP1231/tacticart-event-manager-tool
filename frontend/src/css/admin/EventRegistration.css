@@ -1,0 +1,280 @@
+.event-register-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 100%;
+    margin: 40px auto;
+}
+
+.event-register-container h1 {
+    text-align: center;
+}
+
+.event-register-container .button-center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.event-register-container .toggle-existing-event-button {
+    padding: 5px 20px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-register-container .toggle-existing-event-button:hover {
+    background-color: #0056b3;
+}
+
+.event-register-container .event-register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-register-container .event-register-form .form-group {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.event-register-container .form-group.full-width {
+    display: flex;
+    width: 100%;
+}
+
+.event-register-container .form-group.full-width .group-label {
+    width: auto;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    text-align: right;
+}
+
+.event-register-container .form-group.full-width input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.event-register-container .event-register-form .group-label {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #495057;
+    width: 100px;
+}
+
+.event-register-container .event-register-form input[type="date"],
+.event-register-container .event-register-form input[type="time"],
+.event-register-container .event-register-form input[type="text"],
+.event-register-container .event-register-form select {
+    flex: 1;
+    padding: 6px;
+    margin: 0px 3px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.event-register-container .event-register-form textarea {
+    flex: 1;
+    padding: 6px;
+    margin: 0px 3px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    height: 100px;
+}
+
+.event-register-container .event-register-form input[type="file"] {
+    padding: 6px;
+    font-size: 12px;
+}
+
+.event-register-container .event-register-form .submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.event-register-container .event-register-form button:hover {
+    background-color: #218838;
+}
+
+.event-register-container .form-help-text {
+    font-size: 11px;
+    color: #666;
+    margin-left: 114px;
+    margin-top: 0px;
+}
+
+.event-register-container .additional-dates-container {
+    display: flex;
+    flex-direction: column;
+    width: 86%;  
+}
+
+.event-register-container .additional-date-entry {
+    display: flex;
+    align-items: center;
+    width: 100%;  
+    margin-bottom: 10px;
+}
+
+.event-register-container .additional-date-entry input[type="date"] {
+    flex: 1 1 20%;
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.event-register-container .additional-date-entry input[name="additional_date_title"] {
+    flex: 1 1 30%;
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.event-register-container .additional-date-entry input[name="description"] {
+    flex: 2 1 50%;
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.event-register-container .additional-date-entry button {
+    padding: 8px;
+    margin-top: 0;
+    font-size: 12px;
+    height: 25px;
+    line-height: 1px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.event-register-container .add-date-button, .add-cast-button,
+.event-register-container .remove-date-button {
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-register-container .add-date-button {
+    background-color: #007bff;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    line-height: 1px;
+    margin: 0px auto;
+}
+
+.event-register-container .add-date-button:hover {
+    background-color: #0056b3;
+}
+
+.event-register-container .remove-date-button {
+    background-color: #dc3545;
+}
+
+.event-register-container .remove-date-button:hover {
+    background-color: #c82333;
+}
+
+.event-register-container .casts-container {
+    display: flex;
+    flex-direction: column;
+    width: 86%;
+}
+
+.event-register-container .cast-entry {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.event-register-container .cast-entry input[name="role"] {
+    flex: 1 1 30%;
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.event-register-container .cast-entry input[name="name"] {
+    flex: 2 1 70%;
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.event-register-container .cast-entry button {
+    padding: 8px;
+    margin-top: 0;
+    font-size: 12px;
+    height: 25px;
+    line-height: 1px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.event-register-container .add-cast-button {
+    background-color: #007bff;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    line-height: 1px;
+    margin: 0px auto;
+}
+
+.event-register-container .add-cast-button:hover {
+    background-color: #0056b3;
+}
+
+.event-register-container .remove-cast-button {
+    background-color: #dc3545;
+}
+
+.event-register-container .remove-cast-button:hover {
+    background-color: #c82333;
+}
+
+.event-register-container .option-label {
+    width: auto;
+    display: flex;
+    align-items: center;
+}
+
+.event-register-container .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.event-register-container .option-label input[type="checkbox"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}

@@ -1,0 +1,133 @@
+.genre-management-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 500px;
+    height: 100%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.genre-management-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.genre-management-container .message {
+    color: green;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.genre-management-container .genre-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.genre-management-container .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.genre-management-container .form-label,
+.genre-management-container .form-label-color {
+    display: inline-block;
+    width: 100px; /* ラベルの幅を統一 */
+    text-align: right;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.genre-management-container .form-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.genre-management-container .form-input-color {
+    width: 50px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.genre-management-container .submit-button {
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.genre-management-container .submit-button:hover {
+    background-color: #45a049;
+}
+
+.genre-management-container .genre-list {
+    width: 100%;
+}
+
+.genre-management-container .genre-list h2 {
+    margin-bottom: 10px;
+}
+
+.genre-management-container .genre-list .genre-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.genre-management-container .genre-list .genre-item .color-box {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.genre-management-container .genre-list .genre-item span {
+    flex-grow: 1;
+}
+
+.genre-management-container .genre-list .genre-item .delete-button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 50px;
+    text-align: center;
+}
+
+.genre-management-container .genre-list .genre-item .delete-button.placeholder {
+    background-color: transparent;
+    cursor: default;
+}
+
+.genre-management-container .genre-list .genre-item .delete-button:hover:not(.placeholder) {
+    background-color: #e53935;
+}
+
+.genre-management-container .back-button {
+    position: absolute;
+    bottom: -55px;
+    left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

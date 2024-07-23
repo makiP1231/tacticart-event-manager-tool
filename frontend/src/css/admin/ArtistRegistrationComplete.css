@@ -1,0 +1,81 @@
+.artist-completion-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* サイズ調整 */
+  margin: 40px auto;
+}
+
+.artist-completion-container .artist-details {
+  font-size: 16px;
+  color: #333;
+}
+
+.artist-completion-container .registration-url {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.artist-completion-container .registration-url a {
+  color: #0066cc;
+}
+
+.artist-completion-container button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  margin-top: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.artist-completion-container button:hover {
+  background-color: #218838;
+}
+
+.artist-completion-container .continue-button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.artist-completion-container .continue-button:hover {
+  background-color: #0056b3;
+}
+
+.artist-completion-container .back-button {
+  display: block;
+  background-color: gray;
+  color: white;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.artist-completion-container .registration-url-textarea {
+  width: 60%; /* コンテナの幅いっぱいに広がるように設定 */
+  height: 15px; /* 適切な高さに設定 */
+  overflow-x: auto; /* 横スクロールを有効に */
+  white-space: nowrap; /* 折り返しを無効に */
+  border: 1px solid #ccc; /* 軽いボーダーを追加 */
+  /* スクロールバーを非表示に */
+  scrollbar-width: none; /* Firefox 用 */
+  -ms-overflow-style: none; /* IE、Edge用 */
+}
+
+/* WebKitブラウザ用のスクロールバー非表示設定 */
+.artist-completion-container .registration-url-textarea::-webkit-scrollbar {
+  display: none;
+}

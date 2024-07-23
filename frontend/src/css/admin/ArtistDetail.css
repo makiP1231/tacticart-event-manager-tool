@@ -1,0 +1,177 @@
+.artist-detail-container {
+    width: 800px;
+    height: 100%;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+}
+
+.artist-detail-container .back-button {
+    position: absolute;
+    bottom: -55px;
+    left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.artist-detail-container .back-button:hover {
+    background-color: #0056b3;
+}
+
+.artist-detail-container .part-badge {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+
+.artist-detail-container .artist-detail h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.artist-detail-container .artist-detail-status {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+.artist-detail-container .artist-detail {
+    margin-bottom: 20px;
+}
+
+.artist-detail-container .artist-parts {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.artist-detail-container .artist-part {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.artist-detail-container .artist-detail label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.artist-detail-container .artist-detail input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.artist-detail-container .part-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.artist-detail-container .part-checkboxes label {
+    display: inline-block;
+    padding: 5px 15px;
+    margin: 4px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #333;
+}
+
+.artist-detail-container .part-checkboxes label.main-part {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #ffc400;
+}
+
+.artist-detail-container .part-checkboxes label.sub-part {
+    background-color: #007bff;
+    color: white;
+}
+
+.artist-detail-container .reset-button {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+.artist-detail-container .reset-button:hover {
+    background-color: #505050;
+}
+
+.artist-detail-container .part-edit-btn {
+    float: right;
+    font-size: 12px;
+    color: gray;
+}
+
+.artist-detail-container .button-group {
+    margin-top: 10px;
+    display: flex;
+}
+
+.artist-detail-container .artist-detail button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.artist-detail-container .artist-detail button:hover {
+    background-color: #0056b3;
+}
+
+.artist-detail-container .admin-note-section {
+    margin-top: 20px;
+}
+
+.artist-detail-container .admin-note-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.artist-detail-container .admin-note-section button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.artist-detail-container .admin-note-section button:hover {
+    background-color: #45a049;
+}

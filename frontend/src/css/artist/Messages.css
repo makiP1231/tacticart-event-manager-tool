@@ -1,0 +1,348 @@
+.artist-message-container {
+    display: flex;
+    width: 100%;
+}
+
+.artist-message-container .artist-message-sidebar {
+    width: 20%;
+    background-color: #f8f8f8;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.artist-message-container .artist-message-sidebar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.artist-message-container .artist-message-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 10;
+}
+
+.artist-message-sidebar li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.artist-message-sidebar li:hover {
+    background-color: #f1f1f1;
+}
+
+.artist-message-sidebar li.active {
+    background-color: #e7f3ff;
+}
+
+.artist-message-sidebar .badge {
+    background-color: #666;
+    color: white;
+    font-size: 10px;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-right: 5px;
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.new-message-badge {
+    background-color: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.artist-message-chat-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.artist-message-chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column-reverse; /*縦方向反転*/
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.artist-message-chat-messages::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.artist-message-chat-message-wrapper {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.artist-message-chat-message {
+    padding: 6px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+    max-width: 70%;
+    display: inline-block;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.artist-message-chat-message img {
+    margin-top: 10px;
+    width: 300px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.artist-message-chat-message .download-container {
+    text-align: right;
+}
+
+.artist-message-chat-message.artist-message {
+    text-align: left; /* 追加: 左揃えに変更 */
+    direction: ltr; /* 追加: 左から右へのテキスト方向 */
+    float: right;
+    background-color: #e7f3ff;
+    align-self: flex-end;
+}
+
+.artist-message-chat-message.admin-message {
+    text-align: left;
+    background-color: #e8ffe8;
+    align-self: flex-start;
+}
+
+
+
+.artist-message-chat-message .message-read-status {
+    position: absolute;
+    bottom: 0px;
+    left: -30px; /* メッセージ枠の左外に表示 */
+    font-size: 10px;
+    color: #666;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.artist-message-chat-message .image-download-link {
+    font-size: 0.8em;
+    color: #666;
+    text-decoration: none;
+    cursor: pointer; /* ポインターを表示 */
+    display: inline; /* インライン表示に変更 */
+}
+
+.artist-message-chat-message .image-download-link:hover {
+    text-decoration: underline;
+}
+
+.message-meta {
+    margin-top: 2px;
+    font-size: 0.7em;
+    color: #666;
+}
+
+.message-meta.admin-message {
+    text-align: left;
+}
+
+.message-meta.artist-message {
+    text-align: right;
+}
+
+.message-meta .message-time {
+    margin-right: 5px;
+}
+
+.artist-message-chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+.artist-message-chat-input textarea {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.artist-message-chat-input button {
+    padding: 10px 20px;
+    margin: 10px 3px;
+    font-size: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin: 10px 3px;
+    font-size: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 10px;
+    text-align: center;
+}
+
+.modal-close,
+.modal-prev,
+.modal-next {
+    position: absolute;
+    top: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    z-index: 1001;
+}
+
+.modal-prev , .modal-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    z-index: 1001;
+}
+
+.modal-prev {
+    left: 10px;
+}
+
+.modal-next {
+    right: 10px;
+}
+
+.modal-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.artist-message-chat-message.announce-hold-message {
+    background-color: #fff9c4;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.artist-message-chat-message .announce-hold-txt {
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 3px solid #ffa07a;
+    margin: 5px 10px;
+    text-align: center;
+}
+
+.announce-hold-message .flyer-image {
+    width: 300px;
+    height: auto;
+    margin: 0px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.announce-hold-message .event-name {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0px;
+    text-align: center;
+}
+
+.announce-hold-message .event-performance-type {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.announce-hold-message .event-genre {
+    display: inline-block;
+    background-color: #ffa07a;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.announce-hold-message .event-date-time,
+.announce-hold-message .event-venue {
+    font-size: 1.4em;
+    margin-bottom: 3px;
+    margin-top: 5px;
+}

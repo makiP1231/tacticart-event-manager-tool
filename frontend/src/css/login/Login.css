@@ -1,0 +1,50 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20vh;
+}
+
+.login-container .login-form {
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* フォームの幅を固定 */
+}
+
+.login-container h2 {
+  margin-bottom: 20px; /* 見出しの下にスペースを追加 */
+}
+
+.login-container input[type="text"], 
+.login-container input[type="password"] {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box; /* パディングとボーダーを含めてサイズを計算 */
+}
+
+.login-container button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.login-container .email-input {
+  width: 100%;  /* 全幅に設定 */
+  padding: 10px 15px; /* パディングで入力しやすいサイズに調整 */
+  margin: 10px 0; /* 上下のマージン */
+  border: 1px solid #ccc; /* ボーダー設定 */
+  border-radius: 4px; /* 角を丸く */
+  box-sizing: border-box; /* ボックスサイズ調整 */
+}

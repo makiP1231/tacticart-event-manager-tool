@@ -1,0 +1,78 @@
+.artist-dashboard {
+    display: flex;
+    background-color: #f4f4f4;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.artist-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff; /* 白背景 */
+    box-sizing: border-box;
+}
+
+.artist-sidebar {
+    width: 200px;
+    background-color: #5a5a5a;
+    color: #f4f4f4;
+    padding: 0px 20px 20px 20px;
+    box-sizing: border-box;
+}
+
+.artist-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.artist-sidebar li {
+    padding: 10px;
+}
+
+.artist-sidebar .artist-info {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+.artist-sidebar .artist-info .message-text {
+    font-size: 13px;
+    margin: 4px;
+    color: #f4f4f4;
+}
+
+.artist-sidebar .artist-info .artist-name {
+    font-size: 16px;
+    margin: 0;
+    color: #f4f4f4;
+}
+
+.artist-sidebar .artist-main-part {
+    background-color: #4CAF50;
+    color: #333;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    height: 15px;
+    display: inline-block;
+}
+
+.artist-sidebar .artist-main-part .artist-part{
+    color: #f4f4f4;
+    margin: 0;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+
+
+.artist-sidebar a {
+    text-decoration: none;
+    color: #f4f4f4; /* リンクの色 */
+}
+
+.artist-sidebar a:hover {
+    color: #c7c7c7; /* ホバー時の色 */
+}

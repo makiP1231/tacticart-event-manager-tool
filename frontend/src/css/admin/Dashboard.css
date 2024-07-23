@@ -1,0 +1,97 @@
+/* 管理者ダッシュボード全体のスタイリング */
+.admin-dashboard {
+    display: flex;
+    background-color: #f4f4f4;
+    width: 100%;        /* 全幅にする */
+    min-height: calc(100vh - 66.5px );
+    box-sizing: border-box; /* パディングとボーダーを幅に含む */
+}
+
+/* サイドバーとメインコンテンツのボックスサイズを調整 */
+.sidebar, .content {
+    box-sizing: border-box; /* パディングとボーダーを幅に含む */
+}
+
+/* サイドバーのスタイリング */
+.sidebar {
+    width: 200px;
+    background-color: #5a5a5a;
+    color: #f4f4f4;
+    padding: 20px;
+}
+
+.sidebar h3 {
+    padding: 5px 0;
+    margin-top: 0px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul ul {
+    padding-left: 20px;
+}
+
+.sidebar li {
+    padding: 5px 0;
+}
+
+.sidebar li:last-child {
+    border-bottom: none;
+}
+
+.sidebar a {
+    color: #f4f4f4;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.sidebar a:hover {
+    color: #c7c7c7;
+}
+
+/* メインコンテンツエリアのスタイリング */
+h1 {
+    color: #333;
+    font-size: 25px;
+}
+
+/* リンクとサブメニューのスタイル調整 */
+.sidebar li ul li a {
+    font-size: 0.85em; /* 子メニューのフォントサイズを親メニューより小さく設定 */
+    padding-left: 10px; /* 左に少し余白を追加 */
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

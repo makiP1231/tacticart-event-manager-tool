@@ -1,0 +1,63 @@
+.event-list-container {
+  padding: 20px;
+  width: 90%;
+}
+
+.event-list-container .event-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: left;
+}
+
+.event-list-container .event-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 200px; /* カードの幅 */
+  position: relative; /* 追加: ジャンル位置の基準点 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.event-list-container .event-card:hover {
+  transform: scale(1.05);
+}
+
+.event-list-container .event-card h2 {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.event-list-container .event-card p {
+  font-size: 12px;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.event-list-container .genre {
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 12px;
+  right: 15px;
+}
+
+.event-list-container .event-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.event-list-container .event-card .time {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

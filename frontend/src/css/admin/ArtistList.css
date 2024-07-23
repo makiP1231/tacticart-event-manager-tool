@@ -1,0 +1,101 @@
+/* D:\TacticartEventManagerTool\frontend\src\css\admin\ArtistList.css*/
+
+.artist-list-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .artist-list-container .artist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .artist-list-container .artist-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .artist-list-container .artist-card-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .artist-list-container .artist-profile-pic {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .artist-list-container .artist-name-container {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 60px);
+    position: relative;
+  }
+  
+  .artist-list-container .artist-name-container.long-name:hover .artist-name {
+    animation: scroll 10s linear infinite;
+  }
+  
+  .artist-list-container .artist-name {
+    font-size: 16px;
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0%);
+    }
+    80% {
+      transform: translateX(calc(-100% + 60px));
+    }
+    81% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
+  .artist-list-container .artist-part {
+    background-color: #28a745; /* 背景色を緑に変更 */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 5px;
+  }
+  
+  .artist-list-container .artist-button {
+    background-color: #007bff; /* 色を青に変更 */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .artist-list-container .artist-button:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+  }

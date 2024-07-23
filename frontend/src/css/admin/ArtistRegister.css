@@ -1,0 +1,111 @@
+.artist-register-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  height: 100%;
+  margin: 40px auto;
+  position: relative;
+}
+
+.artist-register-container .artist-register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-register-container .artist-register-form label {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.artist-register-container .artist-register-form input[type="text"] {
+  margin-bottom: 20px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.artist-register-container .part-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.artist-register-container .part-checkboxes label {
+  display: inline-block;
+  padding: 5px 15px;
+  margin: 4px;
+  background-color: #f0f0f0; /* デフォルトの背景色 */
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #333; /* テキストの色を暗めに設定して視認性を高める */
+}
+
+.artist-register-container .part-checkboxes label.main-part {
+  background-color: #007bff; /* メインパートの背景色 */
+  color: white; /* メインパートのテキスト色 */
+  border: 2px solid #ffc400;
+}
+
+.artist-register-container .part-checkboxes label.sub-part {
+  background-color: #007bff; /* サブパートの背景色 */
+  color: white; /* サブパートのテキスト色 */
+}
+
+.artist-register-container .part-checkboxes input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.artist-register-container .part-checkboxes label.selected {
+  background-color: #c8e6c9; /* 選択されたチェックボックスの背景色 */
+  border-color: #4caf50;
+}
+
+.artist-register-container .artist-register-form button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.artist-register-container .artist-register-form button:hover {
+  background-color: #218838;
+}
+
+.artist-register-container .reset-button {
+  background-color: #333; /* リセットボタンの背景色 */
+  color: #f0f0f0; /* リセットボタンのテキスト色 */
+}
+
+.artist-register-container .reset-button:hover {
+  background-color: #505050; /* ホバー時の背景色変更 */
+}
+
+.artist-register-container .part-edit-btn {
+  float: right;
+  font-size: 12px;
+  color: gray;
+  display: inline;
+}
+
+
+.artist-register-container .back-button {
+  position: absolute;
+  bottom: -55px;
+  left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
