@@ -81,7 +81,7 @@ router.get('/admin/nickname-permissions/:artistId', async (req, res) => {
 // ニックネームの許可を更新するエンドポイント
 router.post('/admin/nickname-permission', async (req, res) => {
     const { artistId } = req.body;
-    const adminUserId = req.session.userId;  // 現在の管理者IDをセッションから取得
+    const adminUserId = req.session.adminUserId;  // 現在の管理者IDをセッションから取得
     try {
         await pool.query(
             'INSERT INTO admin_nickname_permissions (id, admin_user_id, artist_id) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
@@ -97,7 +97,7 @@ router.post('/admin/nickname-permission', async (req, res) => {
 // ニックネームの許可を削除するエンドポイント
 router.delete('/admin/nickname-permission', async (req, res) => {
     const { artistId } = req.body;
-    const adminUserId = req.session.userId;  // 現在の管理者IDをセッションから取得
+    const adminUserId = req.session.adminUserId;  // 現在の管理者IDをセッションから取得
     try {
         await pool.query(
             'DELETE FROM admin_nickname_permissions WHERE admin_user_id = $1 AND artist_id = $2',
@@ -140,7 +140,7 @@ router.get('/admin/name/:adminUserId', async (req, res) => {
 // 現在の管理者と選択されたアーティストのニックネーム許可情報を取得するエンドポイント
 router.get('/admin/nickname-permission-status/:artistId', async (req, res) => {
     const { artistId } = req.params;
-    const adminUserId = req.session.userId;
+    const adminUserId = req.session.adminUserId;
     try {
         const result = await pool.query(
             'SELECT 1 FROM admin_nickname_permissions WHERE admin_user_id = $1 AND artist_id = $2',
@@ -167,7 +167,7 @@ router.get('/messages/:artistId/:offset/:limit', async (req, res) => {
                     mi.file_name AS image_file_name,
                     m.created_at AT TIME ZONE 'Asia/Tokyo' as created_at,
                     m.is_read,
-                    ahc.event_uuid,
+                    ahc.base_event_uuid AS event_uuid,
                     e.name AS event_name,
                     e.genre AS event_genre,
                     e.performance_type AS event_performance_type,
@@ -184,7 +184,7 @@ router.get('/messages/:artistId/:offset/:limit', async (req, res) => {
              LEFT JOIN artist_messages am2 ON m.id = am2.message_id
              LEFT JOIN message_images mi ON COALESCE(am.image_id, am2.image_id) = mi.id
              LEFT JOIN artist_hold_casting ahc ON am.hold_casting_id = ahc.id
-             LEFT JOIN events e ON ahc.event_uuid = e.event_uuid
+             LEFT JOIN events e ON ahc.base_event_uuid = e.event_uuid
              WHERE m.artist_id = $1 AND (am.message_id IS NOT NULL OR am2.message_id IS NOT NULL)
              ORDER BY m.created_at DESC
              LIMIT $2 OFFSET $3`,
@@ -197,8 +197,6 @@ router.get('/messages/:artistId/:offset/:limit', async (req, res) => {
         res.status(500).json({ error: 'Server error', details: error.message });
     }
 });
-
-
 
 // 管理者側の新しいメッセージを取得するエンドポイント
 router.get('/admin/messages/new/:artistId/:lastCreatedAt', async (req, res) => {
@@ -213,7 +211,7 @@ router.get('/admin/messages/new/:artistId/:lastCreatedAt', async (req, res) => {
                     mi.file_name AS image_file_name,
                     m.created_at AT TIME ZONE 'Asia/Tokyo' as created_at,
                     m.is_read,
-                    ahc.event_uuid,
+                    ahc.base_event_uuid AS event_uuid,
                     e.name as event_name,
                     (SELECT 1 FROM admin_nickname_permissions p WHERE p.admin_user_id = am.admin_user_id AND p.artist_id = m.artist_id) AS is_nickname_allowed
              FROM messages m
@@ -221,7 +219,7 @@ router.get('/admin/messages/new/:artistId/:lastCreatedAt', async (req, res) => {
              LEFT JOIN artist_messages am2 ON m.id = am2.message_id
              LEFT JOIN message_images mi ON COALESCE(am.image_id, am2.image_id) = mi.id
              LEFT JOIN artist_hold_casting ahc ON am.hold_casting_id = ahc.id
-             LEFT JOIN events e ON ahc.event_uuid = e.event_uuid
+             LEFT JOIN events e ON ahc.base_event_uuid = e.event_uuid
              WHERE m.artist_id = $1 AND m.created_at > $2 AND (am.message_id IS NOT NULL OR am2.message_id IS NOT NULL)
              ORDER BY m.created_at`,
             [artistId, new Date(lastCreatedAt).toISOString()]
@@ -234,10 +232,9 @@ router.get('/admin/messages/new/:artistId/:lastCreatedAt', async (req, res) => {
     }
 });
 
-
 // 管理者がテキストメッセージを送信するエンドポイント
 router.post('/admin/messages/text', async (req, res) => {
-    if (!req.session.userId) {
+    if (!req.session.adminUserId) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -255,7 +252,7 @@ router.post('/admin/messages/text', async (req, res) => {
 
         await pool.query(
             'INSERT INTO admin_messages (id, message_id, content, message_format, admin_user_id) VALUES ($1, $2, $3, $4, $5)',
-            [uuidv4(), newMessage.rows[0].id, content, 'text', req.session.userId]
+            [uuidv4(), newMessage.rows[0].id, content, 'text', req.session.adminUserId]
         );
 
         // artistsテーブルのlast_message_timeを更新
@@ -276,7 +273,7 @@ router.post('/admin/messages/text', async (req, res) => {
 
 // 管理者が画像を送信するエンドポイント
 router.post('/admin/messages/images', upload.array('images', 5), async (req, res) => {
-    if (!req.session.userId) {
+    if (!req.session.adminUserId) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -310,7 +307,7 @@ router.post('/admin/messages/images', upload.array('images', 5), async (req, res
 
             await pool.query(
                 'INSERT INTO admin_messages (id, message_id, content, message_format, image_id, admin_user_id) VALUES ($1, $2, $3, $4, $5, $6)',
-                [uuidv4(), newMessage.rows[0].id, '', 'image', imageId, req.session.userId]
+                [uuidv4(), newMessage.rows[0].id, '', 'image', imageId, req.session.adminUserId]
             );
 
             // artistsテーブルのlast_message_timeを更新
@@ -330,11 +327,10 @@ router.post('/admin/messages/images', upload.array('images', 5), async (req, res
     }
 });
 
-
 // アーティストのメッセージを既読にするエンドポイント
 router.post('/admin/messages/is-read', async (req, res) => {
     const { artistId } = req.body;
-    const adminUserId = req.session.userId;
+    const adminUserId = req.session.adminUserId;
     try {
         const result = await pool.query(
             'UPDATE messages SET is_read = TRUE WHERE artist_id = $1 AND message_type = \'artist_message\' AND is_read = FALSE RETURNING id',
@@ -356,8 +352,6 @@ router.post('/admin/messages/is-read', async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error', details: error.message });
     }
 });
-
-
 
 // 古いメッセージ画像を削除するジョブを追加
 cron.schedule('0 0 * * *', async () => {

@@ -5,68 +5,103 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 40px auto;
-}
-
-.event-complete-container .event-details {
-    text-align: left;
-    margin-top: 20px;
-}
-
-.event-complete-container .event-details h2 {
-    margin-bottom: 10px;
-    font-size: 24px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .event-complete-container h1 {
+    text-align: center;
+    font-size: 26px;
     color: #333;
-}
-
-.event-complete-container .event-details p {
-    margin: 5px 0;
-    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .event-details {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .event-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .event-info-table th,
+  .event-info-table td {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+  }
+  
+  .event-info-table th {
+    background-color: #f7f7f7;
+    text-align: left;
+    width: 30%;
+  }
+  
+  .additional-section,
+  .casts-section {
+    margin-bottom: 20px;
+  }
+  
+  .additional-section h3,
+  .casts-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .detail-text {
+    font-size: 14px;
+    margin: 4px 0;
     color: #666;
-}
-
-.event-complete-container .flyer-image {
-    max-width: 40%; /* 画像の幅をコンテナの幅に合わせる */
-    height: auto; /* 画像の高さを自動調整 */
-    margin-top: 20px; /* 上部のマージンを設定 */
-    border-radius: 4px; /* 角を丸くする */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 影を追加 */
-}
-
-.event-complete-container .buttons {
+  }
+  
+  .flyers-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .flyer-image {
+    max-width: 45%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .buttons {
     display: flex;
     gap: 10px;
+    justify-content: center;
     margin-top: 20px;
-}
-
-.event-complete-container .buttons button {
+  }
+  
+  .buttons button {
     background-color: #28a745;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.event-complete-container .buttons button:hover {
-    background-color: #218838;
-}
-
-.event-complete-container .buttons button:nth-child(2) {
-    background-color: #007bff;
-}
-
-.event-complete-container .buttons button:nth-child(2):hover {
-    background-color: #0056b3;
-}
-
-
-.event-complete-container .option-badge {
-    display: inline-block;
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
     font-size: 14px;
-}
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .buttons button:hover {
+    background-color: #218838;
+  }
+  
+  /* 2番目のボタン（イベント一覧） */
+  .buttons button:nth-child(2) {
+    background-color: #007bff;
+  }
+  
+  .buttons button:nth-child(2):hover {
+    background-color: #0056b3;
+  }
+  

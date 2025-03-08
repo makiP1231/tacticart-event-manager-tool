@@ -36,23 +36,31 @@ if (!MESSAGE_IMAGE_PATH) {
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+
 // プロフィールデータを取得するエンドポイント
-router.get('/admin/profile', authenticateAdmin, async (req, res) => {
-    if (!req.session.userId) {
+router.get('/admin/profile', async (req, res) => {
+    console.log('Session check:', req.session);  // Log session to see what is stored
+
+    if (!req.session || !req.session.adminUserId) {
+        console.log('No valid session found');
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
     try {
-        const result = await pool.query('SELECT username, full_name, position, nickname, email, profile_picture FROM admin_users WHERE id = $1', [req.session.userId]);
+        const result = await pool.query(
+            'SELECT username, full_name, position, nickname, email, profile_picture FROM admin_users WHERE id = $1',
+            [req.session.adminUserId]
+        );
         if (result.rows.length > 0) {
             const profileData = result.rows[0];
             if (profileData.profile_picture) {
-                profileData.profile_picture_url = `${API_URL}${ADMIN_PROFILE_IMAGE_PATH}/${profileData.profile_picture}`;
+                profileData.profile_picture_url = `${process.env.REACT_APP_API_URL}${process.env.ADMIN_PROFILE_IMAGE_PATH}/${profileData.profile_picture}`;
             } else {
                 profileData.profile_picture_url = null;
             }
             res.json(profileData);
         } else {
+            console.log('Profile not found for ID:', req.session.userId);
             res.status(404).json({ message: 'Profile not found' });
         }
     } catch (error) {

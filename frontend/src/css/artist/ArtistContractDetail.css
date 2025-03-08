@@ -1,0 +1,276 @@
+/* ArtistContractDetail.css */
+
+/* メインコンテナ */
+.artist-contract-detail-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* タイトルとステータスバッジを横並びにする */
+  .contract-title {
+    display: flex;
+    align-items: center;       /* 垂直方向で中央寄せ */
+    justify-content: center;   /* 水平方向で中央寄せ */
+    gap: 15px;                 /* アイテム間の隙間 */
+    margin-bottom: 20px;       /* 下余白 */
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* タイトルテキスト */
+  .contract-title h1 {
+    font-size: 1.8em;
+    color: #333;
+    margin: 0; /* デフォルトのマージンをリセット */
+  }
+  
+  /* エラー文 */
+  .artist-contract-detail-container .error {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* セクション */
+  .artist-contract-detail-container .section {
+    margin-bottom: 30px;
+  }
+  
+  /* テーブル */
+  .artist-contract-detail-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .artist-contract-detail-container table th,
+  .artist-contract-detail-container table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .artist-contract-detail-container table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    width: 180px; /* 必要に応じて調整 */
+  }
+  
+  /* ステータスバッジ */
+  .artist-contract-detail-container .status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #fff;
+    display: inline-block;
+  }
+  
+  /* ステータスごとの色 */
+  .artist-contract-detail-container .status-pending {
+    background-color: #ffc107; /* 確認待ち：黄色 */
+  }
+  
+  .artist-contract-detail-container .status-agreed {
+    background-color: #28a745; /* 契約済み：緑 */
+  }
+  
+  .artist-contract-detail-container .status-disagreed {
+    background-color: #dc3545; /* 非同意：赤 */
+  }
+  
+  .artist-contract-detail-container .status-cancelled {
+    background-color: #6c757d; /* 取り消し：グレー */
+  }
+  
+  /* 回答ボタン */
+  .response-buttons {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .response-buttons .response-button {
+    flex: 1;               /* 横幅を均等に */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #fff;
+  }
+  
+  .response-button.agree {
+    background-color: #28a745;
+  }
+  
+  .response-button.agree:hover {
+    background-color: #218838;
+  }
+  
+  .response-button.disagree {
+    background-color: #dc3545;
+  }
+  
+  .response-button.disagree:hover {
+    background-color: #c82333;
+  }
+  
+  /* 戻るボタン */
+  .back-button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .back-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+
+/* ===== モーダルオーバーレイ ===== */
+.contract-agree-modal-overlay,
+.contract-disagree-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ===== モーダルコンテンツ共通 ===== */
+.contract-agree-modal-content,
+.contract-disagree-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* タイトル（hタグ）の調整 */
+.contract-modal-title {
+  text-align: center;
+  font-size: 18px;  /* 適度なサイズに調整 */
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+
+/* ラベル共通 */
+.contract-modal-label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+/* テキストエリアの調整 */
+.contract-disagree-textarea {
+  width: 96%;
+  height: 80px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-align: left;
+  display: block;
+}
+
+/* セレクトボックスの調整 */
+.contract-disagree-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  background: #fff;
+  display: block;
+}
+
+/* ボタンコンテナ：縦並びにする */
+.contract-modal-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 送信ボタン：共通カラー（青）・全幅 */
+.modal-submit-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* キャンセルボタン：赤系統・全幅 */
+.modal-cancel-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-cancel-button:hover {
+  background-color: #a71d2a;
+}
+
+  
+  /* レスポンシブ対応 */
+  @media (max-width: 600px) {
+    .artist-contract-detail-container {
+      padding: 15px;
+    }
+    .contract-title h1 {
+      font-size: 1.5em;
+    }
+    .artist-contract-detail-container table th,
+    .artist-contract-detail-container table td {
+      font-size: 12px;
+      padding: 6px 8px;
+    }
+    .response-buttons .response-button,
+    .back-button {
+      padding: 8px 16px;
+      font-size: 0.9em;
+    }
+  }
+  

@@ -1,0 +1,159 @@
+.contract-history-container {
+    padding: 20px;
+    background-color: #f0f2f5;
+    flex: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .contract-history-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* フィルタ全体 */
+  .contract-history-container .filter-container {
+    display: flex;
+    flex-direction: column; /* 2段に分けたいので縦配置 */
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center; /* 横方向に中央寄せ */
+  }
+  
+  /* 各行（filter-row）を横並びに */
+  .contract-history-container .filter-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* 狭い場合は折り返し */
+    width: 100%;     /* 横幅を広げて中央寄せ */
+    max-width: 900px; /* ある程度の上限幅を指定してもOK */
+  }
+  
+  /* セレクトやテキスト入力など */
+  .contract-history-container .filter-row select,
+  .contract-history-container .filter-row input[type="text"],
+  .contract-history-container .filter-row input[type="date"] {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-width: 140px; /* 幅をある程度確保 */
+  }
+  
+  /* 2行目の期間選択 */
+  .contract-history-container .date-row {
+    /* すでに .filter-row で flex 横並び */
+  }
+  
+  
+  .contract-history-container .date-filter-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* 絞り込みボタン */
+  .contract-history-container .filter-btn {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .contract-history-container .filter-btn:hover {
+    background-color: #003f8a;
+  }
+  
+  /* ソートボタン */
+  .contract-history-container .sort-toggle-btn {
+    padding: 3px 5px;
+    font-size: 12px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dfe2e6;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .contract-history-container .sort-toggle-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+  }
+  
+  /* テーブル */
+  .contract-history-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .contract-history-container table th,
+  .contract-history-container table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .contract-history-container table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .contract-history-container table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .contract-history-container table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* 行クリック */
+  .contract-history-container .clickable-row {
+    cursor: pointer;
+  }
+  .contract-history-container .clickable-row:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* ステータスバッジ */
+  .contract-history-container .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    min-width: 80px;
+  }
+  
+  .contract-history-container .status-sent {
+    background-color: #007bff;
+  }
+  .contract-history-container .status-cancelled {
+    background-color: #6c757d;
+  }
+  .contract-history-container .status-agreed {
+    background-color: #28a745;
+  }
+  .contract-history-container .status-disagreed {
+    background-color: #dc3545;
+  }
+  

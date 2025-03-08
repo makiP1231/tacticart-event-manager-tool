@@ -1,0 +1,107 @@
+/* ContractDetail.css */
+
+/* 1) admin-dashboard は全ページ共通
+   2) このページ特有の親クラスとして .contract-detail-content を用意 */
+
+   .contract-detail-content {
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  /* 戻るボタン */
+  .contract-detail-content .back-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  /* セクション */
+  .contract-detail-content .section {
+    margin-bottom: 30px;
+  }
+  
+  .contract-detail-content .section h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+  
+  /* テーブルを横スクロール可能に */
+  .contract-detail-content .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+  }
+  
+  /* テーブル全般 */
+  .contract-detail-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .contract-detail-content table th,
+  .contract-detail-content table td {
+    border: 1px solid #ccc;
+    padding: 5px 14px;
+    text-align: left;
+    vertical-align: top;
+    white-space: normal; 
+    word-break: break-word;
+  }
+  
+  .contract-detail-content table th {
+    background-color: #f2f2f2;
+    width: 160px; /* 必要に応じて調整 */
+  }
+  
+  /* ステータスバッジ */
+  .contract-detail-content .status-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* ステータスごとの色例 */
+  .contract-detail-content .status-sent {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  .contract-detail-content .status-cancelled {
+    background-color: #f44336;
+    color: #fff;
+  }
+  .contract-detail-content .status-agreed {
+    background-color: #2196F3;
+    color: #fff;
+  }
+  .contract-detail-content .status-disagreed {
+    background-color: #FF9800;
+    color: #fff;
+  }
+  
+  /* クリック可能な行 */
+  .contract-detail-content .clickable-row {
+    cursor: pointer;
+  }
+  .contract-detail-content .clickable-row:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* エラーメッセージ */
+  .contract-detail-content .error {
+    color: red;
+    text-align: center;
+    font-size: 16px;
+  }
+  

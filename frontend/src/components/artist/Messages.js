@@ -23,9 +23,11 @@ const ArtistMessages = () => {
     const limit = 20;
     const [isFetching, setIsFetching] = useState(false);
     const isFetchingRef = useRef(isFetching);
+    const [activeChat, setActiveChat] = useState(null);
+    const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
-        isFetchingRef.current = isFetching; // 現在のフェッチ状態をrefに同期
+        isFetchingRef.current = isFetching;
     }, [isFetching]);
 
     const scrollToTop = () => {
@@ -36,7 +38,27 @@ const ArtistMessages = () => {
         }, 100);
     };
 
-    const fetchInitialMessages = async () => {
+    const fetchGenres = async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/genres`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setGenres(data);
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching genres:', error);
+            setError('ジャンルの取得に失敗しました。');
+        }
+    };
+
+    const fetchInitialMessages = async (isNewChat = false) => {
+        if (!activeChat && !isNewChat) return;
+
         try {
             const response = await fetch(`${API_URL}/api/artist/messages/0/${limit}`, {
                 method: 'GET',
@@ -55,6 +77,9 @@ const ArtistMessages = () => {
                     });
                 setMessages(messagesWithClassNames);
                 setOffset(messagesWithClassNames.length);
+                const unreadMessages = messagesWithClassNames.filter(message => message.message_type === 'admin_message' && !message.is_read).length;
+                setUnreadCount(unreadMessages);
+                console.log('Initial unread messages count:', unreadMessages);
                 scrollToTop();
             } else {
                 throw new Error(data.message);
@@ -66,7 +91,7 @@ const ArtistMessages = () => {
     };
 
     const fetchMoreMessages = async () => {
-        if (isFetchingRef.current) return;
+        if (!activeChat || isFetchingRef.current) return;
         setIsFetching(true);
 
         try {
@@ -145,7 +170,7 @@ const ArtistMessages = () => {
             const data = await response.json();
             if (response.ok) {
                 setNewMessage('');
-                await fetchInitialMessages(); // メッセージ送信後にサーバーから最新メッセージを取得
+                await fetchInitialMessages();
                 scrollToTop();
             } else {
                 throw new Error(data.error || 'Unknown error');
@@ -198,13 +223,19 @@ const ArtistMessages = () => {
     };
 
     useEffect(() => {
+        fetchGenres();
+        fetchInitialMessages(true);
+    }, []);
+
+    useEffect(() => {
         socket.on('connect', () => {
             console.log('Connected to WebSocket server');
         });
 
         socket.on('new_message', async () => {
             await fetchInitialMessages();
-            await markMessagesAsRead();
+            setUnreadCount(prev => prev + 1);
+            console.log('New message received. Updated unread count:', unreadCount + 1);
         });
 
         socket.on('messages-read', (data) => {
@@ -215,6 +246,8 @@ const ArtistMessages = () => {
                         readMessageIds.includes(message.id) ? { ...message, is_read: true } : message
                     )
                 );
+                setUnreadCount(0);
+                console.log('Messages read. Unread count reset to 0.');
             }
         });
 
@@ -224,7 +257,7 @@ const ArtistMessages = () => {
             socket.off('messages-read');
             socket.off('disconnect');
         };
-    }, []);
+    }, [activeChat, unreadCount]);
 
     const getMessageClass = (message) => {
         let baseClass = message.message_type === 'admin_message' ? 'admin-message' : 'artist-message';
@@ -286,8 +319,11 @@ const ArtistMessages = () => {
     const imageUrls = imageMessages.map((message) => `${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`);
 
     const handleMainChatClick = async () => {
-        await fetchInitialMessages();
+        setActiveChat('mainChat');
+        await fetchInitialMessages(true);
         await markMessagesAsRead();
+        setUnreadCount(0);
+        console.log('Main chat clicked. Unread count reset to 0.');
     };
 
     return (
@@ -296,109 +332,113 @@ const ArtistMessages = () => {
             <div className="artist-message-container">
                 <div className="artist-message-sidebar">
                     <ul>
-                        <li className="active" onClick={handleMainChatClick}>
-                            メインチャット
-                            {messages.filter((msg) => msg.message_type === 'admin_message' && !msg.is_read).length > 0 && (
-                                <span className="new-message-badge">
-                                    {messages.filter((msg) => msg.message_type === 'admin_message' && !msg.is_read).length}
-                                </span>
+                        <li onClick={handleMainChatClick}>
+                            タクティカート
+                            {unreadCount > 0 && (
+                                <span className="new-message-badge">{unreadCount}</span>
                             )}
                         </li>
                     </ul>
                 </div>
                 <div className="artist-message-chat-container">
-                    <div className="artist-message-chat-messages" ref={chatContainerRef}>
-                        {messages.map((message, index) => (
-                            <div className={`artist-message-chat-message-wrapper`} key={index}>
-                                <div className={`artist-message-chat-message ${message.className}`}>
-                                    {message.message_format === 'announce_hold' ? (
-                                        <>
-                                            <p className='announce-hold-txt'>オファーが届きました</p>
-                                            {message.event_flyer_front_url && (
-                                                <img
-                                                    src={`${API_URL}${FLYER_IMAGE_PATH}/${message.event_flyer_front_url}`}
-                                                    alt="イベントフライヤー"
-                                                    className="flyer-image"
-                                                    onClick={() => handleImageClick(`${API_URL}${FLYER_IMAGE_PATH}/${message.event_flyer_front_url}`)}
-                                                />
+                    {!activeChat ? (
+                        <div className="no-chat-selected">チャットを選択してください</div>
+                    ) : (
+                        <>
+                            <div className="artist-message-chat-messages" ref={chatContainerRef}>
+                                {messages.map((message, index) => (
+                                    <div className={`artist-message-chat-message-wrapper`} key={index}>
+                                        <div className={`artist-message-chat-message ${message.className}`}>
+                                            {message.message_format === 'announce_hold' ? (
+                                                <>
+                                                    <p className='announce-hold-txt'>オファーが届きました</p>
+                                                    {message.event_flyer_front_url && (
+                                                        <img
+                                                            src={`${API_URL}${FLYER_IMAGE_PATH}/${message.event_flyer_front_url}`}
+                                                            alt="イベントフライヤー"
+                                                            className="flyer-image"
+                                                            onClick={() => handleImageClick(`${API_URL}${FLYER_IMAGE_PATH}/${message.event_flyer_front_url}`)}
+                                                        />
+                                                    )}
+                                                    <p className="event-name">{message.event_name}</p>
+                                                    <p className="event-performance-type">{message.event_performance_type}</p>
+                                                    <p className="event-date-time">
+                                                        {`${new Date(message.event_date).toLocaleDateString('ja-JP')} ${message.event_start_time ? message.event_start_time.slice(0, 5) : ''}`}
+                                                    </p>
+                                                    <p className="event-venue">{message.event_venue}</p>
+                                                    <p className="event-genre">{message.genreLabel}</p>
+                                                </>
+                                            ) : message.message_format === 'image' ? (
+                                                message.image_file_name ? (
+                                                    <>
+                                                        <img
+                                                            src={`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`}
+                                                            alt="メッセージ画像"
+                                                            onClick={() => handleImageClick(`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`)}
+                                                        />
+                                                        <div className="download-container">
+                                                            <span
+                                                                className="image-download-link"
+                                                                onClick={() => handleDownload(`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`)}
+                                                            >
+                                                                ダウンロード
+                                                            </span>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <span>画像の保存期間は1週間です。</span>
+                                                )
+                                            ) : (
+                                                <div>{formatMessageContent(message.content)}</div>
                                             )}
-                                            <p className="event-name">{message.event_name}</p>
-                                            <p className="event-performance-type">{message.event_performance_type}</p>
-                                            <p className="event-date-time">
-                                                {`${new Date(message.event_date).toLocaleDateString('ja-JP')} ${message.event_start_time.slice(0, 5)}`}
-                                            </p>
-                                            <p className="event-venue">{message.event_venue}</p>
-                                            <p className="event-genre">{message.genreLabel}</p>
-                                        </>
-                                    ) : message.message_format === 'image' ? (
-                                        message.image_file_name ? (
-                                            <>
-                                                <img
-                                                    src={`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`}
-                                                    alt="メッセージ画像"
-                                                    onClick={() => handleImageClick(`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`)}
-                                                />
-                                                <div className="download-container">
-                                                    <span
-                                                        className="image-download-link"
-                                                        onClick={() => handleDownload(`${API_URL}${MESSAGE_IMAGE_PATH}/${message.image_file_name}`)}
-                                                    >
-                                                        ダウンロード
-                                                    </span>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <span>画像の保存期間は1週間です。</span>
-                                        )
-                                    ) : (
-                                        <div>{formatMessageContent(message.content)}</div>
-                                    )}
-                                    {message.is_read && message.message_type === 'artist_message' && (
-                                        <span className="message-read-status">既読</span>
-                                    )}
-                                </div>
-                                <div className={`message-meta ${message.className}`}>
-                                    <span className="message-time">
-                                        {new Date(message.created_at).toLocaleString('ja-JP', {
-                                            year: 'numeric',
-                                            month: '2-digit',
-                                            day: '2-digit',
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                        })}
-                                    </span>
-                                    {message.message_type === 'admin_message' && (
-                                        <span className="message-sender">
-                                            {message.is_nickname_allowed ? message.admin_nickname : message.admin_full_name || ''}
-                                        </span>
-                                    )}
-                                </div>
+                                            {message.is_read && message.message_type === 'artist_message' && (
+                                                <span className="message-read-status">既読</span>
+                                            )}
+                                        </div>
+                                        <div className={`message-meta ${message.className}`}>
+                                            <span className="message-time">
+                                                {new Date(message.created_at).toLocaleString('ja-JP', {
+                                                    year: 'numeric',
+                                                    month: '2-digit',
+                                                    day: '2-digit',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit',
+                                                })}
+                                            </span>
+                                            {message.message_type === 'admin_message' && (
+                                                <span className="message-sender">
+                                                    {message.is_nickname_allowed ? message.admin_nickname : message.admin_full_name || ''}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                                {isUploading && <div className="loading-indicator">画像を送信中...</div>}
                             </div>
-                        ))}
-                        {isUploading && <div className="loading-indicator">画像を送信中...</div>}
-                    </div>
-                    <div className="artist-message-chat-input">
-                        <textarea
-                            value={newMessage}
-                            onChange={(e) => setNewMessage(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            placeholder="メッセージを入力..."
-                            rows="3"
-                            style={{ resize: 'none' }}
-                        />
-                        <button onClick={handleSendMessage}>送信</button>
-                        <input
-                            type="file"
-                            multiple
-                            accept="image/jpeg,image/jpg,image/png"
-                            onChange={handleImageUpload}
-                            style={{ display: 'none' }}
-                            id="image-upload-input"
-                        />
-                        <label htmlFor="image-upload-input" className="image-upload-button">
-                            画像選択
-                        </label>
-                    </div>
+                            <div className="artist-message-chat-input">
+                                <textarea
+                                    value={newMessage}
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                    placeholder="メッセージを入力..."
+                                    rows="3"
+                                    style={{ resize: 'none' }}
+                                />
+                                <button onClick={handleSendMessage}>送信</button>
+                                <input
+                                    type="file"
+                                    multiple
+                                    accept="image/jpeg,image/jpg,image/png"
+                                    onChange={handleImageUpload}
+                                    style={{ display: 'none' }}
+                                    id="image-upload-input"
+                                />
+                                <label htmlFor="image-upload-input" className="image-upload-button">
+                                    画像選択
+                                </label>
+                            </div>
+                        </>
+                    )}
                 </div>
                 {isModalOpen && (
                     <div className="modal-overlay" onClick={closeModal}>

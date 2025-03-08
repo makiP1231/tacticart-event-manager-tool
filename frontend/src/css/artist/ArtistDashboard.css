@@ -1,8 +1,9 @@
 .artist-dashboard {
     display: flex;
     background-color: #f4f4f4;
-    width: 100%;
-    box-sizing: border-box;
+    width: 100%;        /* 全幅にする */
+    min-height: calc(100vh - 63px );
+    box-sizing: border-box; /* パディングとボーダーを幅に含む */
 }
 
 .artist-content {
@@ -13,26 +14,26 @@
 }
 
 .artist-sidebar {
-    width: 200px;
-    background-color: #5a5a5a;
-    color: #f4f4f4;
-    padding: 0px 20px 20px 20px;
+    min-width: 200px;
+    background-color: #353535;
+    color: #ffffff;
+    padding: 20px;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
 .artist-sidebar ul {
     list-style: none;
     padding: 0;
+    margin: 10px 0 15px;
 }
 
 .artist-sidebar li {
-    padding: 10px;
+    font-size: 14px;
 }
 
 .artist-sidebar .artist-info {
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -70,9 +71,22 @@
 
 .artist-sidebar a {
     text-decoration: none;
-    color: #f4f4f4; /* リンクの色 */
+    width: 100%;
+    display: block;
+    color: inherit; /* リンクの色 */
 }
 
 .artist-sidebar a:hover {
-    color: #c7c7c7; /* ホバー時の色 */
+    background-color: #444;
 }
+
+
+
+.artist-sidebar .offer-badge {
+    background-color: #dc3545; /* 赤色、必要に応じて変更 */
+    color: white;
+    padding: 1px 8px 3px 7px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 5px;
+  }

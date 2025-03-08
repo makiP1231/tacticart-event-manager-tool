@@ -1,0 +1,181 @@
+/* HoldCastingHistory.css */
+.hold-casting-history-container {
+    padding: 20px;
+    background-color: #f0f2f5;
+    flex: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .hold-casting-history-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* フィルター全体 */
+  .hold-casting-history-container .filter-container {
+    display: flex;
+    flex-direction: column; /* 2行構成にする */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* 1行目、2行目 それぞれ横並び */
+  .hold-casting-history-container .filter-container .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center; /* 中央寄せ */
+  }
+  
+  /* selectやinputの共通スタイル */
+  .hold-casting-history-container .filter-container select,
+  .hold-casting-history-container .filter-container input[type="date"],
+  .hold-casting-history-container .filter-container input[type="text"] {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* 期間選択 */  
+  .hold-casting-history-container .date-filter-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .hold-casting-history-container .filter-btn {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .hold-casting-history-container .filter-btn:hover {
+    background-color: #00408a;
+  }
+  
+  /* テーブル */
+  .hold-casting-history-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 12px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .hold-casting-history-container th,
+  .hold-casting-history-container td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .hold-casting-history-container th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  
+  .hold-casting-history-container tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .hold-casting-history-container tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .hold-casting-history-container .clickable-row {
+    cursor: pointer;
+  }
+  
+  .hold-casting-history-container .clickable-row:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* ステータスバッジ */
+  .hold-casting-history-container .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    min-width: 80px;
+  }
+  
+  .hold-casting-history-container .status-pending {
+    background-color: #ffc107;
+  }
+  .hold-casting-history-container .status-approved {
+    background-color: #28a745;
+  }
+  .hold-casting-history-container .status-rejected {
+    background-color: #dc3545;
+  }
+  .hold-casting-history-container .status-cancelled {
+    background-color: #6c757d;
+  }
+  .hold-casting-history-container .status-waiting-contract {
+    background-color: #ffc107;
+    color: #fff;
+  }
+  .hold-casting-history-container .status-contracted {
+    background-color: #28a745;
+    color: #fff;
+  }
+  .hold-casting-history-container .status-contract-sent {
+    background-color: #007bff;
+  }
+  .hold-casting-history-container .status-expired {
+    background-color: #6c757d;
+  }
+  
+  
+  /* アクションボタン */
+  
+  .hold-casting-history-container .action-buttons button {
+    padding: 4px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .hold-casting-history-container .action-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* ソートボタン */
+  .hold-casting-history-container .sort-toggle-btn {
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dfe2e6;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .hold-casting-history-container .sort-toggle-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+  }
+  

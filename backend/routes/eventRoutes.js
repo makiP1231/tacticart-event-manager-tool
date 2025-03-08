@@ -54,17 +54,19 @@ async function processImage(file, folder) {
 router.post('/events', upload.fields([{ name: 'flyerFront' }, { name: 'flyerBack' }]), async (req, res) => {
     let {
         name, genre, event_date, open_time, start_time, organizer, operator,
-        performance_type, venue, use_existing_flyers, original_event_uuid, performance_flag,
+        performance_type, venue, prefecture, use_existing_flyers, original_event_uuid, performance_flag,
         additionalDates, program, selectedOptions, casts, event_overview, ticket_info
     } = req.body;
 
+    // 入力値の検証とデフォルト値設定
     event_date = event_date || null;
     open_time = open_time || null;
     start_time = start_time || null;
     original_event_uuid = original_event_uuid || null;
+    performance_flag = performance_flag || 'single'; // デフォルト値を'single'に設定
 
     try {
-        selectedOptions = selectedOptions ? JSON.parse(selectedOptions) : null;
+        selectedOptions = selectedOptions ? JSON.parse(selectedOptions) : [];
     } catch (e) {
         console.error('Failed to parse selectedOptions:', e);
         return res.status(400).json({ message: 'Invalid selected options format.' });
@@ -72,34 +74,32 @@ router.post('/events', upload.fields([{ name: 'flyerFront' }, { name: 'flyerBack
 
     const eventUUID = uuidv4();
     try {
-        const flyerFrontPath = req.files['flyerFront'] && !use_existing_flyers
-            ? await processImage(req.files['flyerFront'][0], 'flyers')
-            : null;
-        const flyerBackPath = req.files['flyerBack'] && !use_existing_flyers
-            ? await processImage(req.files['flyerBack'][0], 'flyers')
-            : null;
+        const flyerFrontPath = req.files['flyerFront'] ? await processImage(req.files['flyerFront'][0], 'flyers') : null;
+        const flyerBackPath = req.files['flyerBack'] ? await processImage(req.files['flyerBack'][0], 'flyers') : null;
 
+        // SQL に都道府県（prefecture）カラムを追加
         const newEvent = await pool.query(
-            'INSERT INTO events (event_uuid, name, genre, event_date, open_time, start_time, organizer, operator, performance_type, venue, flyer_front_url, flyer_back_url, original_event_uuid, use_existing_flyers, performance_flag, program, selected_options, event_overview, ticket_info) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *',
-            [eventUUID, name, genre, event_date, open_time, start_time, organizer, operator, performance_type, venue, flyerFrontPath, flyerBackPath, original_event_uuid, use_existing_flyers, performance_flag, program, JSON.stringify(selectedOptions), event_overview, ticket_info]
+            'INSERT INTO events (event_uuid, name, genre, event_date, open_time, start_time, organizer, operator, performance_type, venue, prefecture, flyer_front_url, flyer_back_url, original_event_uuid, use_existing_flyers, performance_flag, program, selected_options, event_overview, ticket_info) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING *',
+            [eventUUID, name, genre, event_date, open_time, start_time, organizer, operator, performance_type, venue, prefecture, flyerFrontPath, flyerBackPath, original_event_uuid, use_existing_flyers, performance_flag, program, JSON.stringify(selectedOptions), event_overview, ticket_info]
         );
 
+        // 追加日程とキャスト情報の保存
         if (additionalDates) {
             const parsedAdditionalDates = JSON.parse(additionalDates);
-            for (const { date, description, additional_date_title } of parsedAdditionalDates) {
+            for (const date of parsedAdditionalDates) {
                 await pool.query(
                     'INSERT INTO events_other_date (event_uuid, additional_date, description, additional_date_title) VALUES ($1, $2, $3, $4)',
-                    [eventUUID, date, description, additional_date_title]
+                    [eventUUID, date.additional_date, date.description, date.additional_date_title]
                 );
             }
         }
 
         if (casts) {
             const parsedCasts = JSON.parse(casts);
-            for (const { role, name } of parsedCasts) {
+            for (const cast of parsedCasts) {
                 await pool.query(
                     'INSERT INTO event_casts (event_uuid, cast_role, cast_name) VALUES ($1, $2, $3)',
-                    [eventUUID, role, name]
+                    [eventUUID, cast.role, cast.name]
                 );
             }
         }
@@ -152,7 +152,7 @@ router.get('/events', async (req, res) => {
     }
 });
 
-// 登録されたイベントの一覧を取得
+// 登録されたイベントの一覧を取得(まだ未開催のイベント)
 router.get('/events/upcoming', async (req, res) => {
     try {
         const results = await pool.query(
@@ -165,17 +165,54 @@ router.get('/events/upcoming', async (req, res) => {
     }
 });
 
-router.get('/events/past', async (req, res) => {
+// すべてのイベントを最新順に取得（過去も含む、最大1000件）
+router.get('/events/all', async (req, res) => {
     try {
-        const results = await pool.query(
-            'SELECT * FROM events WHERE event_date < CURRENT_DATE ORDER BY event_date DESC'
-        );
-        res.json({ events: results.rows });
+      const results = await pool.query(
+        `SELECT * FROM events 
+         ORDER BY event_date DESC NULLS LAST
+         LIMIT 1000`
+      );
+      res.json({ events: results.rows });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+      console.error(err.message);
+      res.status(500).send('Server error');
     }
-});
+  });
+  
+  
+// 期間指定によるイベント絞り込みエンドポイント
+router.get('/events/filter-by-date', async (req, res) => {
+    try {
+      const { startDate, endDate } = req.query;
+      let query = 'SELECT * FROM events';
+      let params = [];
+      let orderClause = '';
+  
+      if (startDate && endDate) {
+        query += ' WHERE event_date BETWEEN $1 AND $2';
+        params = [startDate, endDate];
+        orderClause = ' ORDER BY event_date ASC NULLS LAST';
+      } else if (startDate) {
+        query += ' WHERE event_date >= $1';
+        params = [startDate];
+        orderClause = ' ORDER BY event_date ASC';
+      } else if (endDate) {
+        query += ' WHERE event_date <= $1';
+        params = [endDate];
+        orderClause = ' ORDER BY event_date DESC NULLS LAST';
+      }
+      query += orderClause + ' LIMIT 1000';
+  
+      const results = await pool.query(query, params);
+      res.json({ events: results.rows });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ message: 'Server error', details: err.message });
+    }
+  });
+  
+  
 
 
 // イベント登録ページ用の初回イベントの情報を取得
@@ -228,13 +265,11 @@ router.get('/events/:eventUuid', async (req, res) => {
     }
 });
 
-
-// イベントの更新エンドポイント
 router.put('/events/:eventId', upload.none(), async (req, res) => {
     const { eventId } = req.params;
     const {
         name, genre, event_date, open_time, start_time, organizer, operator,
-        performance_type, venue, performance_flag, program, selectedOptions, event_overview, ticket_info,
+        performance_type, venue, prefecture, performance_flag, program, selectedOptions, event_overview, ticket_info,
         additionalDates, casts, use_existing_flyers
     } = req.body;
 
@@ -242,6 +277,9 @@ router.put('/events/:eventId', upload.none(), async (req, res) => {
     const validEventDate = event_date || null;
     const validOpenTime = open_time || null;
     const validStartTime = start_time || null;
+
+    // use_existing_flyers を明示的に boolean 化する
+    const useExistingFlyersBoolean = (use_existing_flyers === 'true' || use_existing_flyers === true);
 
     let selectedOptionsParsed = null;
     try {
@@ -255,11 +293,16 @@ router.put('/events/:eventId', upload.none(), async (req, res) => {
         const updatedEvent = await pool.query(
             `UPDATE events 
              SET name = $1, genre = $2, event_date = $3, open_time = $4, start_time = $5, 
-                 organizer = $6, operator = $7, performance_type = $8, venue = $9, 
-                 performance_flag = $10, program = $11, selected_options = $12, 
-                 event_overview = $13, ticket_info = $14, use_existing_flyers = $15
-             WHERE event_uuid = $16 RETURNING *`,
-            [name, genre, validEventDate, validOpenTime, validStartTime, organizer, operator, performance_type, venue, performance_flag, program, JSON.stringify(selectedOptionsParsed), event_overview, ticket_info, use_existing_flyers, eventId]
+                 organizer = $6, operator = $7, performance_type = $8, venue = $9, prefecture = $10,
+                 performance_flag = $11, program = $12, selected_options = $13, 
+                 event_overview = $14, ticket_info = $15, use_existing_flyers = $16
+             WHERE event_uuid = $17 RETURNING *`,
+            [
+              name, genre, validEventDate, validOpenTime, validStartTime,
+              organizer, operator, performance_type, venue, prefecture,
+              performance_flag, program, JSON.stringify(selectedOptionsParsed), event_overview, ticket_info,
+              useExistingFlyersBoolean, eventId
+            ]
         );
 
         // 追加日程の更新
@@ -300,7 +343,6 @@ router.put('/events/:eventId', upload.none(), async (req, res) => {
         res.status(500).json({ message: 'Server error', details: err.message });
     }
 });
-
 
 
 // フライヤーを削除するエンドポイント
@@ -403,10 +445,16 @@ router.delete('/events/:eventId', async (req, res) => {
         deleteFlyer(flyer_front_url);
         deleteFlyer(flyer_back_url);
 
-        // キャスティング情報の削除
-        await pool.query('DELETE FROM casting_info WHERE event_id = $1', [eventId]);
+        // `event_casting_info` の削除（情報がない場合も問題なく処理）
+        try {
+            await pool.query('DELETE FROM event_casting_info WHERE event_uuid = $1', [eventId]);
+        } catch (error) {
+            console.warn('Warning: Failed to delete from event_casting_info. Skipping.');
+        }
+
         // 出演者情報の削除
         await pool.query('DELETE FROM event_casts WHERE event_uuid = $1', [eventId]);
+
         // 追加日程の削除
         await pool.query('DELETE FROM events_other_date WHERE event_uuid = $1', [eventId]);
 
@@ -422,6 +470,7 @@ router.delete('/events/:eventId', async (req, res) => {
         res.status(500).json({ message: 'Server error', details: error.message });
     }
 });
+
 
 
 
@@ -488,11 +537,157 @@ router.get('/events/:eventUuid/additional-dates', async (req, res) => {
 
 
 
+// POST - 新規会場登録
+router.post('/venues', async (req, res) => {
+    const { 
+      name, 
+      postal_code, 
+      prefecture, 
+      city, 
+      address, 
+      google_map_link, 
+      capacity, 
+      related_links, 
+      remarks, 
+      phone,
+      website_link 
+    } = req.body;
+  
+    try {
+      const query = `
+        INSERT INTO venues 
+        (name, postal_code, prefecture, city, address, google_map_link, capacity, related_links, remarks, phone, website_link)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        RETURNING *
+      `;
+      const values = [
+        name,
+        postal_code || null,
+        prefecture,
+        city,
+        address,
+        google_map_link || null,
+        capacity || null,
+        JSON.stringify(related_links || []),
+        remarks || null,
+        phone || null,
+        website_link || null 
+      ];
+  
+      const result = await pool.query(query, values);
+      res.status(201).json({ venue: result.rows[0] });
+    } catch (error) {
+      console.error('Error inserting venue:', error);
+      res.status(500).json({ error: 'Venue registration failed' });
+    }
+  });
 
+// 会場のIDと名前を取得するAPI
+router.get('/venues/names', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT id, name FROM venues');
+        res.json({ venues: result.rows });
+    } catch (error) {
+        console.error('Error fetching venue names:', error.message);
+        res.status(500).json({ message: 'Server error', details: error.message });
+    }
+});
 
+  // GET - 全会場一覧取得
+router.get('/venuelist', async (req, res) => {
+    try {
+      const query = `
+        SELECT id, name, postal_code, prefecture, city, address, 
+               google_map_link, capacity, related_links, remarks, 
+               phone, website_link
+        FROM venues
+        ORDER BY id ASC
+      `;
+      const result = await pool.query(query);
+      res.status(200).json({ venues: result.rows });
+    } catch (error) {
+      console.error('Error fetching venues:', error);
+      res.status(500).json({ error: 'Failed to fetch venues' });
+    }
+  });
+  
 
-
-
+  // GET - 会場詳細取得 (/api/venues/:venueId)
+router.get('/venues/:venueId', async (req, res) => {
+    const { venueId } = req.params;
+    try {
+      const query = `
+        SELECT id, name, postal_code, prefecture, city, address, 
+               google_map_link, capacity, related_links, remarks, 
+               phone, website_link
+        FROM venues
+        WHERE id = $1
+      `;
+      const result = await pool.query(query, [venueId]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Venue not found' });
+      }
+      res.status(200).json({ venue: result.rows[0] });
+    } catch (error) {
+      console.error('Error fetching venue:', error);
+      res.status(500).json({ error: 'Failed to fetch venue' });
+    }
+  });
+  
+  // PUT - 会場詳細更新 (/api/venues/:venueId)
+  router.put('/venues/:venueId', async (req, res) => {
+    const { venueId } = req.params;
+    const { name, postal_code, prefecture, city, address, google_map_link, capacity, related_links, remarks, phone, website_link } = req.body;
+    try {
+      const query = `
+        UPDATE venues 
+        SET name = $1, postal_code = $2, prefecture = $3, city = $4, address = $5, 
+            google_map_link = $6, capacity = $7, related_links = $8, remarks = $9, 
+            phone = $10, website_link = $11, updated_at = NOW()
+        WHERE id = $12
+        RETURNING *
+      `;
+      const values = [
+        name,
+        postal_code || null,
+        prefecture,
+        city,
+        address,
+        google_map_link || null,
+        capacity || null,
+        JSON.stringify(related_links || []),
+        remarks || null,
+        phone || null,
+        website_link || null,
+        venueId
+      ];
+      const result = await pool.query(query, values);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Venue not found' });
+      }
+      res.status(200).json({ venue: result.rows[0] });
+    } catch (error) {
+      console.error('Error updating venue:', error);
+      res.status(500).json({ error: 'Failed to update venue' });
+    }
+  });
+  
+  // DELETE - 会場削除 (/api/venues/:venueId)
+  router.delete('/venues/:venueId', async (req, res) => {
+    const { venueId } = req.params;
+    try {
+      const query = `DELETE FROM venues WHERE id = $1 RETURNING *`;
+      const result = await pool.query(query, [venueId]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Venue not found' });
+      }
+      res.status(200).json({ message: 'Venue deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting venue:', error);
+      res.status(500).json({ error: 'Failed to delete venue' });
+    }
+  });
+  
 
 
 

@@ -1,0 +1,120 @@
+.venue-detail-container {
+    padding: 30px;
+    background-color: #f0f2f5;
+    font-family: 'Arial', sans-serif;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-sizing: border-box;
+  }
+  
+  .venue-detail-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .venue-detail-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin: 0 auto 30px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  
+  .venue-detail-container table th,
+  .venue-detail-container table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+  }
+  
+  .venue-detail-container table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .venue-detail-container table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .venue-detail-container table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* ボタン群のスタイル */
+  .venue-detail-container .button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .venue-detail-container .button-group button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .venue-detail-container .button-group button:hover {
+    opacity: 0.9;
+  }
+  
+  /* 編集/保存用ボタン */
+  .venue-detail-container .button-group button:first-child {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* キャンセル/削除用ボタン */
+  .venue-detail-container .button-group button:nth-child(2) {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* 一覧に戻るボタン */
+  .venue-detail-container .button-group button:nth-child(3) {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  /* 入力フィールドのスタイル（編集モード用） */
+  .venue-detail-container input[type="text"],
+  .venue-detail-container input[type="url"],
+  .venue-detail-container input[type="number"],
+  .venue-detail-container input[type="tel"],
+  .venue-detail-container textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* コピー用ボタン */
+  .venue-detail-container .copy-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    float: right;
+}
+  
+  .venue-detail-container .copy-btn:hover {
+    background-color: #0056b3;
+  }
+  

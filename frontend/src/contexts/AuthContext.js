@@ -4,23 +4,22 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // fetchSession 関数を定義
   const fetchSession = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/session`, {
         credentials: 'include'
       });
       const data = await response.json();
-      if (response.ok && data.isLoggedIn) {
-        setUser({ userId: data.userId, role: data.role });
-        setIsAuthenticated(true);
+      if (response.ok) {
+        setUser(data);  
       } else {
-        setIsAuthenticated(false);
+        setUser(null);
       }
     } catch (error) {
       console.error('Error checking session:', error);
-      setIsAuthenticated(false);
+      setUser(null);
     }
   };
 
@@ -29,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, fetchSession }}>
+    <AuthContext.Provider value={{ user, fetchSession }}>
       {children}
     </AuthContext.Provider>
   );

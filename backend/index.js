@@ -17,6 +17,7 @@ const commonRoutes = require('./routes/commonRoutes');
 const artistRoutes = require('./routes/artistRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const castingRoutes = require('./routes/castingRoutes');
+const artistCastingRoutes = require('./routes/artistCastingRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const messageArtistRoutes = require('./routes/messageArtistRoutes');
 const db = require('./db');
@@ -102,6 +103,7 @@ app.use('/api', commonRoutes);
 app.use('/api', artistRoutes);
 app.use('/api', eventRoutes);
 app.use('/api', castingRoutes);
+app.use('/api', artistCastingRoutes);
 app.use('/api', messageRoutes);
 app.use('/api', messageArtistRoutes);
 

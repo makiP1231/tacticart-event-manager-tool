@@ -1,0 +1,252 @@
+.artist-offer-detail-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    max-width: 800px; 
+    width: 100%;
+    margin: 40px auto;
+}
+
+.artist-offer-detail-container h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.artist-offer-detail-container .message,
+.artist-offer-detail-container .detail-item {
+    margin-bottom: 10px;
+}
+
+.artist-offer-detail-container .detail-item h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+    font-weight: normal;
+    border-bottom: 1px solid #ccc;
+}
+
+.artist-offer-detail-container .flyer-image {
+    max-width: 150px;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.artist-offer-detail-container .event-section {
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+    display: flex;
+    border: solid 1px #ddd;
+}
+
+.artist-offer-detail-container .event-info {
+    flex: 1;
+}
+
+.artist-offer-detail-container .event-info .event-title {
+    margin: 5px 0px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.artist-offer-detail-container .genre {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.8em;
+    text-align: center;
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+
+.artist-offer-detail-container .date-section {
+    margin-top: 10px;
+  }
+  
+  .artist-offer-detail-container .date-section-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0px;
+    background: none; /* 背景色なし */
+    border: none;   /* ボーダーなし */
+  }
+  
+  .artist-offer-detail-container .date-list {
+    display: flex;
+    flex-direction: column;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  
+  .artist-offer-detail-container .date-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+  }
+  
+  /* 各行の日付とノートの余白 */
+  .artist-offer-detail-container .date-item p {
+    margin: 0;
+    padding: 0 10px;
+  }
+  
+  /* 日付部分：固定幅、例えば100px（必要に応じて調整可能） */
+  .artist-offer-detail-container .date-item .date {
+    width: 100px;
+    flex-shrink: 0;
+  }
+  
+  /* ノート部分：残りの幅を使用 */
+  .artist-offer-detail-container .date-item .note {
+    flex: 1;
+  }
+  
+  /* 交互の行背景色 */
+  .artist-offer-detail-container .date-list .date-item:nth-child(odd) {
+    background-color: #f0f6fc;
+  }
+  .artist-offer-detail-container .date-list .date-item:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+  
+  /* 最後の行以外に下線を追加 */
+  .artist-offer-detail-container .date-list .date-item:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+  
+
+  
+  
+  
+
+.artist-offer-detail-container .status-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.artist-offer-detail-container .status-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.artist-offer-detail-container .status-button.approve {
+    background-color: #28a745;
+    color: #fff;
+    width: 50%;
+}
+
+.artist-offer-detail-container .status-button.approve:hover {
+    background-color: #218838;
+}
+
+.artist-offer-detail-container .status-button.reject {
+    background-color: #dc3545;
+    color: #fff;
+    width: 50%;
+}
+
+.artist-offer-detail-container .status-button.reject:hover {
+    background-color: #c82333;
+    color: #fff;
+}
+
+.artist-offer-detail-container .status-badge {
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.9em;
+    display: block;
+    text-align: center;
+}
+
+.artist-offer-detail-container .status-badge.approved {
+    background-color: #28a745;
+}
+
+.artist-offer-detail-container .status-badge.rejected {
+    background-color: #dc3545;
+}
+
+.artist-offer-detail-container .status-badge.cancelled,
+.artist-offer-detail-container .status-badge.expired {
+    background-color: #6c757d;
+}
+
+.artist-offer-detail-container .info-message {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #fff;
+    padding: 3px 10px;
+    background-color: orange;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.artist-offer-detail-popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.artist-offer-detail-confirmation-popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.artist-offer-detail-confirmation-popup h3 {
+    margin-bottom: 20px;
+}
+
+.artist-offer-detail-confirmation-popup .confirm-button,
+.artist-offer-detail-confirmation-popup .cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.artist-offer-detail-confirmation-popup .confirm-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.artist-offer-detail-confirmation-popup .cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.artist-offer-detail-container .back-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.artist-offer-detail-container .back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.artist-offer-detail-container .back-button:hover {
+    background-color: #0056b3;
+}

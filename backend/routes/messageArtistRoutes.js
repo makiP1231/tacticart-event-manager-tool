@@ -62,10 +62,10 @@ const ensureDirectoryExists = (filePath) => {
 
 // メッセージの取得エンドポイント（分割取得対応）
 router.get('/artist/messages/:offset/:limit', async (req, res) => {
-    const artistId = req.session.userId;
+    const artistId = req.session.artistUserId;
     const offset = parseInt(req.params.offset);
     const limit = parseInt(req.params.limit);
-    
+
     try {
         const messages = await pool.query(
             `SELECT m.id, m.artist_id, m.message_type, 
@@ -76,7 +76,7 @@ router.get('/artist/messages/:offset/:limit', async (req, res) => {
                     mi.file_name AS image_file_name,
                     m.created_at AT TIME ZONE 'Asia/Tokyo' as created_at,
                     m.is_read,
-                    ahc.event_uuid,
+                    ahc.base_event_uuid, -- 修正されたカラム名
                     e.name as event_name,
                     e.performance_type AS event_performance_type,
                     e.genre AS event_genre,
@@ -92,7 +92,7 @@ router.get('/artist/messages/:offset/:limit', async (req, res) => {
              LEFT JOIN artist_messages am2 ON m.id = am2.message_id
              LEFT JOIN message_images mi ON COALESCE(am.image_id, am2.image_id) = mi.id
              LEFT JOIN artist_hold_casting ahc ON am.hold_casting_id = ahc.id
-             LEFT JOIN events e ON ahc.event_uuid = e.event_uuid
+             LEFT JOIN events e ON ahc.base_event_uuid = e.event_uuid -- 修正されたカラム名
              LEFT JOIN admin_users au ON am.admin_user_id = au.id
              WHERE m.artist_id = $1 AND (am.message_id IS NOT NULL OR am2.message_id IS NOT NULL)
              ORDER BY m.created_at DESC
@@ -107,11 +107,9 @@ router.get('/artist/messages/:offset/:limit', async (req, res) => {
     }
 });
 
-
-
-//アーティスト側が管理者のメッセージを既読にするエンドポイント
+// アーティスト側が管理者のメッセージを既読にするエンドポイント
 router.post('/artist/messages/is-read', async (req, res) => {
-    const artistId = req.session.userId;
+    const artistId = req.session.artistUserId;
     try {
         const result = await pool.query(
             'UPDATE messages SET is_read = TRUE WHERE artist_id = $1 AND message_type = \'admin_message\' AND is_read = FALSE RETURNING id',
@@ -136,7 +134,7 @@ router.post('/artist/messages/is-read', async (req, res) => {
 
 // 新しいメッセージの取得エンドポイント
 router.get('/artist/messages/new/:lastCreatedAt', async (req, res) => {
-    const artistId = req.session.userId;
+    const artistId = req.session.artistUserId;
     const { lastCreatedAt } = req.params;
     try {
         const messages = await pool.query(
@@ -166,7 +164,7 @@ router.get('/artist/messages/new/:lastCreatedAt', async (req, res) => {
 
 // アーティストがテキストメッセージを送信するエンドポイント
 router.post('/artist/messages/text', async (req, res) => {
-    const artistId = req.session.userId;
+    const artistId = req.session.artistUserId;
     const { content } = req.body;
 
     if (!content.trim()) {
@@ -202,7 +200,7 @@ router.post('/artist/messages/text', async (req, res) => {
 
 // アーティストが画像を送信するエンドポイント（ソケット対応）
 router.post('/artist/messages/images', upload.array('images', 5), async (req, res) => {
-    const artistId = req.session.userId;
+    const artistId = req.session.artistUserId;
     const files = req.files;
 
     if (!files || files.length === 0) {
@@ -237,8 +235,7 @@ router.post('/artist/messages/images', upload.array('images', 5), async (req, re
 
             // artistsテーブルのlast_message_timeを更新
             await pool.query(
-                'UPDATE artists SET last_message_time = NOW() WHERE artist_id = $1',
-                [artistId]
+                'UPDATE artists SET last_message_time = NOW() WHERE artist_id = $1'
             );
 
             // WebSocketを通じてメッセージを送信

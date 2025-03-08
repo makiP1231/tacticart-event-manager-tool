@@ -1,0 +1,395 @@
+/* ArtistHoldCasting.css */
+
+.artist-hold-casting-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* ヘッダー（件名、イベント選択、アーティスト選択、メッセージの順番） */
+  .artist-hold-casting-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* フォーム全体（1カラムレイアウト） */
+  .artist-hold-casting-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* 各フォームセクション */
+  .artist-hold-casting-container .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .artist-hold-casting-container .subject-section,
+  .artist-hold-casting-container .event-section,
+  .artist-hold-casting-container .artist-selection-section,
+  .artist-hold-casting-container .message-section,
+  .artist-hold-casting-container .casting-options-section {
+    width: 100%;
+  }
+  
+  /* 入力フィールド */
+  .artist-hold-casting-container input[type="text"],
+  .artist-hold-casting-container input[type="number"],
+  .artist-hold-casting-container select,
+  .artist-hold-casting-container textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* タイトルラベル */
+  .artist-hold-casting-container .title-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+
+  }
+  
+  /* イベント選択セクション */
+  .artist-hold-casting-container .event-section .event-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+  }
+  
+  .artist-hold-casting-container .event-item select {
+    margin-bottom: 10px;
+  }
+  
+  /* イベントタブ */
+  .artist-hold-casting-container .event-tabs {
+    display: flex;
+    justify-content: left;
+    border-bottom: 1px solid #4caf50;
+    margin-bottom: 10px;
+  }
+  
+  .artist-hold-casting-container .event-tab {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin: 0 4px;
+  }
+  
+  .artist-hold-casting-container .event-tab.active {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  /* フライヤー＆日程入力セクション（2カラムレイアウト） */
+  .artist-hold-casting-container .flyer-schedule {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .artist-hold-casting-container .flyer-container {
+    text-align: center;
+  }
+  
+  .artist-hold-casting-container .event-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+  
+  .artist-hold-casting-container .date-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .artist-hold-casting-container .date-entry {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .artist-hold-casting-container .date-entry input[type="date"] {
+    height: 24px;
+    font-size: 15px;
+    min-width: 100px;
+  }
+  
+  .artist-hold-casting-container .date-entry input[type="text"] {
+    flex: 1;
+  }
+  
+  /* 日程追加・削除ボタン */
+  .artist-hold-casting-container .add-date-button,
+  .artist-hold-casting-container .remove-date-button,
+  .artist-hold-casting-container .remove-event-button,
+  .artist-hold-casting-container .add-event-button,
+  .artist-hold-casting-container .open-artist-popup-button,
+  .artist-hold-casting-container .close-popup-button {
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .artist-hold-casting-container .remove-date-button,
+  .artist-hold-casting-container .remove-event-button {
+    background-color: #f44336;
+  }
+  
+  /* キャスティングオプションセクション */
+  .artist-hold-casting-container .casting-options-section .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  
+  /* アーティスト選択セクション */
+  .artist-hold-casting-container .artist-selection-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .artist-hold-casting-container .selected-artists {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .artist-hold-casting-container .selected-artist {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
+  .artist-hold-casting-container .selected-artist .artist-info {
+    flex: 0 1 30%;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  .artist-hold-casting-container .selected-artist input[type="number"] {
+    width: 120px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .artist-hold-casting-container .selected-artist textarea {
+    flex: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    overflow-y: auto;
+    min-height: 32px;
+    max-height: 3.6em;
+  }
+  
+  .artist-hold-casting-container .selected-artist .remove-btn {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #f44336;
+    cursor: pointer;
+  }
+  
+  /* フォームフッター */
+  .artist-hold-casting-container .form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 20px;
+  }
+  
+  .artist-hold-casting-container .total-compensation {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .artist-hold-casting-container .submit-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* アーティスト選択ポップアップ */
+  .artist-hold-casting-container .popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    /* クリック可能にして、外側クリックで閉じる */
+    cursor: pointer;
+  }
+  
+  .artist-hold-casting-container .popup-background > .artist-popup,
+  .artist-hold-casting-container .popup-background > .confirmation-popup {
+    cursor: default;
+  }
+  
+  .artist-hold-casting-container .artist-popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content .artist-popup-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content .artist-popup-filter input,
+  .artist-hold-casting-container .artist-popup-content .artist-popup-filter select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content .artist-popup-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content .artist-badge {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .artist-hold-casting-container .artist-popup-content .artist-badge.selected {
+    background-color: #2e7d32;
+  }
+  
+  /* 追加：絞り込み済みアーティスト一括追加ボタン */
+  .artist-hold-casting-container .artist-popup-content .select-all-filtered-button {
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .artist-hold-casting-container .artist-popup-close {
+    text-align: center;
+  }
+  
+  .artist-hold-casting-container .close-popup-button {
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .artist-hold-casting-container .reset-artist-selection {
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .artist-hold-casting-container .reset-artist-selection:hover {
+    color: #333;
+  }
+  
+  /* 確認ポップアップ */
+  .artist-hold-casting-container .confirmation-popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1001;
+  }
+  
+  .artist-hold-casting-container .confirmation-popup h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .artist-hold-casting-container .confirm-button,
+  .artist-hold-casting-container .cancel-button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    width: 200px;
+  }
+  
+  .artist-hold-casting-container .cancel-button {
+    background-color: #f44336;
+  }
+  

@@ -1,98 +1,108 @@
 .event-detail-container {
-  padding: 20px;
+  /* display: flex;  ← ここは削除（もしくはコメントアウト）しておきます */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  padding: 15px;
   background-color: #ffffff;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   margin: 20px auto;
+  border-radius: 8px;
 }
 
 .event-detail-container h1 {
+  width: 100%;
   color: #333;
   font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* ここを追加：左右レイアウトのためのラッパー要素をFlex化 */
+.event-detail-columns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* 左カラム（フライヤー） */
 .event-detail-container .flyer-container {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.event-detail-container .flyer-image {
-  max-width: 45%;
-  height: auto;
-}
-
-.event-detail-container .event-info {
-  margin-bottom: 20px;
-}
-
-.event-detail-container .event-info .badge {
-  display: inline-block;
-  padding: 3px 15px;
-  margin: 5px;
-  color: white;
-  border-radius: 20px;
-  font-size: 14px;
-}
-
-.event-detail-container .additional-info h2 {
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.event-detail-container .additional-dates-table, .event-detail-container .casts-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.event-detail-container .additional-dates-table td, .event-detail-container .casts-table td {
+  align-items: top;
   padding: 10px;
-  border: 1px solid #ddd;
 }
 
-.event-detail-container .casting-info {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.event-detail-container .flyer-section {
+  width: 100%;
+  text-align: center; /* これでも画像は中央寄せされやすくなりますが、 
+                         display: block + margin: 0 auto; のほうが確実 */
 }
 
-.event-detail-container .casting-info h2 {
-  margin-bottom: 10px;
-  font-size: 14px;
+
+/* フライヤー画像にレスポンシブ対応するためのスタイルを追加 */
+.event-detail-container .flyer-image {
+  max-width: 100%;  /* 親要素の幅を超えないようにする */
+  height: auto;     /* アスペクト比を維持したまま自動で高さ調整 */
+  display: block;   /* margin: 0 auto; を効かせるために block に */
+  margin: 0 auto;   /* 画像を中央寄せ */
 }
 
-.event-detail-container .casting-table-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.event-detail-container .casting-table-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.event-detail-container .casting-table-row table {
-  border-collapse: collapse;
-  width: auto;
-  margin: 0;
-}
-
-.event-detail-container .casting-table-row th, .event-detail-container .casting-table-row td {
-  padding: 4px 12px;
-  border: 1px solid #ddd;
-  white-space: nowrap;
-  font-size: 12px;
+/* フライヤー切り替えボタンのデザイン */
+.flyer-navigation {
+  margin-top: 15px;
   text-align: center;
 }
 
+.flyer-navigation .nav-button {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 4px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.flyer-navigation .nav-button:hover {
+  background: linear-gradient(45deg, #2575fc, #6a11cb);
+}
+
+
+
+/* 右カラム（イベント情報テーブル） */
+.event-detail-container .event-info-container {
+  flex: 2;
+  padding: 10px;
+}
+
+/* イベント情報テーブルのスタイル */
+.event-detail-container .event-info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.event-detail-container .event-info-table th,
+.event-detail-container .event-info-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+  font-size: 14px;
+}
+
+.event-detail-container .event-info-table th {
+  background-color: #f7f7f7;
+  width: 25%;
+}
+
+/* ボタンアクション部分 */
 .event-detail-container .event-actions {
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -100,7 +110,7 @@
 }
 
 .event-detail-container .event-actions button {
-  padding: 10px 20px;
+  padding: 10px 15px;
   background-color: #007BFF;
   color: white;
   border: none;
@@ -111,4 +121,48 @@
 
 .event-detail-container .event-actions button:hover {
   background-color: #0056b3;
+}
+
+/* レスポンシブ対応（画面が狭くなったら上下表示に切り替え） */
+@media (max-width: 768px) {
+  .flyer-container {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .event-detail-columns {
+    flex-direction: column;
+  }
+}
+
+/* ポップアップ用のスタイル */
+.flyer-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* 半透明の背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.flyer-popup-image {
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+/* オプションバッジのスタイル */
+.event-detail-container .options-container .option-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 10px;
+  font-size: 12px;
 }

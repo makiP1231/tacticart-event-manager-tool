@@ -3,7 +3,7 @@
     display: flex;
     background-color: #f4f4f4;
     width: 100%;        /* 全幅にする */
-    min-height: calc(100vh - 66.5px );
+    min-height: calc(100vh - 63px );
     box-sizing: border-box; /* パディングとボーダーを幅に含む */
 }
 
@@ -14,42 +14,66 @@
 
 /* サイドバーのスタイリング */
 .sidebar {
-    width: 200px;
-    background-color: #5a5a5a;
-    color: #f4f4f4;
+    min-width: 200px;
+    background-color: #353535;
+    color: #ffffff;
     padding: 20px;
+    min-height: 100vh;
 }
 
+/* サイドバーのタイトル */
 .sidebar h3 {
-    padding: 5px 0;
-    margin-top: 0px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
 }
 
+/* メニューラベル (親メニューの代替) */
+.sidebar-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #bbbbbb;
+    padding: 10px 0 5px;
+    border-bottom: 1px solid #555;
+}
+
+/* メニューリスト */
 .sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 10px 0 15px;
 }
 
-.sidebar ul ul {
-    padding-left: 20px;
-}
-
-.sidebar li {
-    padding: 5px 0;
-}
-
-.sidebar li:last-child {
-    border-bottom: none;
-}
-
-.sidebar a {
-    color: #f4f4f4;
+.sidebar-item {
+    display: block;
+    font-size: 14px;
+    color: #ffffff;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: background 0.3s;
 }
 
-.sidebar a:hover {
-    color: #c7c7c7;
+.sidebar-item a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+}
+
+.sidebar-item:hover {
+    background: #444;
+}
+
+/* ログアウトボタン */
+.sidebar-item.logout {
+    color: #ff6961;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sidebar-item.logout:hover {
+    background: #660000;
 }
 
 /* メインコンテンツエリアのスタイリング */
@@ -88,7 +112,7 @@ h1 {
 }
 
 .pagination button.active {
-    background-color: #007bff;
+    background-color: #235025;
 }
 
 .pagination button:disabled {

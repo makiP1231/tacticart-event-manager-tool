@@ -1,0 +1,63 @@
+.artist-offers-container {
+    display: flex;
+    flex-direction: column;
+    width: 86%;
+    padding: 10px 20px;
+}
+
+.artist-offers-container h1 {
+    margin-bottom: 20px;
+}
+
+.artist-offers-container .offers-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.artist-offers-container .offer-card {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.artist-offers-container .offer-card:hover {
+    background-color: #f0f0f0;
+}
+
+.artist-offers-container .offer-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.artist-offers-container .offer-details p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.artist-offers-container .status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.7em;
+}
+
+.artist-offers-container .status-badge.pending {
+    background-color: #ffc107;
+}
+
+.artist-offers-container .status-badge.cancelled,
+.artist-offers-container .status-badge.expired {
+    background-color: #6c757d;
+}
+
+.artist-offers-container .status-badge.responded {
+    background-color: #28a745;
+}

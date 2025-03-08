@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import AdminSidebar from './Sidebar';
 import '../../css/admin/Messages.css';
 import io from 'socket.io-client';
@@ -17,6 +18,7 @@ const socket = io(API_URL, {
 });
 
 const Message = () => {
+    const { artistId } = useParams(); 
     const [artists, setArtists] = useState([]);
     const [parts, setParts] = useState([]);
     const [groups, setGroups] = useState([]);
@@ -40,6 +42,7 @@ const Message = () => {
     const [hasMore, setHasMore] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
     const limit = 20;
+
 
     const scrollToTop = () => {
         setTimeout(() => {
@@ -95,6 +98,43 @@ const Message = () => {
             setIsFetching(false);
         }
     };
+
+    useEffect(() => {
+        // セッションストレージからartistIdを取得
+        const sessionArtistId = sessionStorage.getItem('selectedArtistId');
+        const sessionArtistName = sessionStorage.getItem('selectedArtistName');
+    
+        console.log('Session artistId:', sessionArtistId);
+        console.log('Session artistName:', sessionArtistName);
+    
+        if (sessionArtistId && sessionArtistName) {
+            // セッションのアーティスト情報がある場合、それを使ってチャットを開く
+            console.log('Using session artist data');
+            const selected = { artist_id: sessionArtistId, name: sessionArtistName };
+            setSelectedArtist(selected);
+            fetchInitialMessages(sessionArtistId);
+    
+            // チャットを開いたらセッションを破棄
+            sessionStorage.removeItem('selectedArtistId');
+            sessionStorage.removeItem('selectedArtistName');
+            console.log('Session data cleared');
+        } else if (artistId) {
+            // URLパラメータにartistIdがある場合、それを利用
+            console.log('Using URL artistId:', artistId);
+            const selected = artists.find(artist => artist.artist_id === artistId);
+            if (selected) {
+                console.log('Artist found in artists list:', selected);
+                setSelectedArtist(selected);
+                fetchInitialMessages(artistId);
+            } else {
+                console.log('Artist not found in artists list');
+            }
+        } else {
+            console.log('No session artistId or URL artistId found');
+        }
+    }, [artistId, artists]);
+    
+    
 
     const fetchMoreMessages = useCallback(async () => {
         if (!selectedArtist || !hasMore || isFetching) return;
@@ -252,6 +292,7 @@ const Message = () => {
         if (selectedArtist && selectedArtist.artist_id === artist.artist_id) {
             return;
         }
+        setError('');
         setMessages([]);
         setOffset(0);
         setHasMore(false);
@@ -279,7 +320,7 @@ const Message = () => {
     };
 
     const getGenreLabel = (genreValue, genres) => {
-        if (!genres.length) return genreValue;
+        if (!genres.length || !genreValue) return genreValue || '';
         const genre = genres.find(g => g.value === genreValue);
         return genre ? genre.label : genreValue;
     };
@@ -335,6 +376,7 @@ const Message = () => {
     };
 
     const formatMessageContent = (content) => {
+        if (!content) return '';
         const urlPattern = /(https?:\/\/[^\s]+)/g;
         return content.split('\n').map((line, index) => (
             <React.Fragment key={index}>
@@ -387,6 +429,7 @@ const Message = () => {
                 }),
             });
             setNewMessage('');
+            await fetchInitialMessages(selectedArtist.artist_id); // 新しいメッセージを取得
         } catch (error) {
             console.error('Error sending message:', error);
             setError('メッセージの送信に失敗しました。');
@@ -629,7 +672,7 @@ const Message = () => {
                                             <p className="event-name">{message.event_name}</p>
                                             <p className="event-performance-type">{message.event_performance_type}</p>
                                             <p className="event-date-time">
-                                                {`${new Date(message.event_date).toLocaleDateString('ja-JP')} ${message.event_start_time.slice(0, 5)}`}
+                                                {`${new Date(message.event_date).toLocaleDateString('ja-JP')} ${message.event_start_time ? message.event_start_time.slice(0, 5) : ''}`}
                                             </p>
                                             <p className="event-venue">{message.event_venue}</p>
                                             <p className="event-genre">{message.genreLabel}</p>

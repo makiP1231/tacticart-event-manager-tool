@@ -1,280 +1,382 @@
+/* メインコンテナ */
 .event-register-container {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    max-width: 800px;
-    width: 100%;
-    margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+  margin: 40px auto;
 }
 
 .event-register-container h1 {
-    text-align: center;
+  text-align: center;
 }
 
+/* 既存イベント切り替えボタン */
 .event-register-container .button-center {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .event-register-container .toggle-existing-event-button {
-    padding: 5px 20px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 5px 20px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .event-register-container .toggle-existing-event-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* フォーム */
 .event-register-container .event-register-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-register-container .event-register-form .form-group {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 10px;
-    width: 100%;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
+/* インライン配置が必要な場合に使用 */
+.event-register-container .form-group.inline-group {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+/* 横幅いっぱい使いたい場合に使用 */
 .event-register-container .form-group.full-width {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
-
 .event-register-container .form-group.full-width .group-label {
-    width: auto;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    text-align: right;
+  width: auto;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: right;
 }
-
 .event-register-container .form-group.full-width input[type="checkbox"] {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
+/* ラベル */
 .event-register-container .event-register-form .group-label {
-    margin-right: 10px;
-    font-size: 14px;
-    color: #495057;
-    width: 100px;
+  margin-right: 10px;
+  font-size: 14px;
+  color: #495057;
+  width: 100px;
 }
 
+/* テキストやセレクト、テキストエリアなど */
 .event-register-container .event-register-form input[type="date"],
 .event-register-container .event-register-form input[type="time"],
 .event-register-container .event-register-form input[type="text"],
-.event-register-container .event-register-form select {
-    flex: 1;
-    padding: 6px;
-    margin: 0px 3px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    width: 100%;
-}
-
+.event-register-container .event-register-form select,
 .event-register-container .event-register-form textarea {
-    flex: 1;
-    padding: 6px;
-    margin: 0px 3px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    width: 100%;
-    height: 100px;
+  flex: 1;
+  padding: 6px;
+  margin: 0px 3px;
+  font-size: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
 }
 
+/* テキストエリアの高さを統一 */
+.event-register-container .event-register-form textarea {
+  height: 100px;
+}
+
+/* ファイル入力 */
 .event-register-container .event-register-form input[type="file"] {
-    padding: 6px;
-    font-size: 12px;
+  padding: 6px;
+  font-size: 12px;
 }
 
+/* 送信ボタン */
 .event-register-container .event-register-form .submit-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-top: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-top: 20px;
 }
 
-.event-register-container .event-register-form button:hover {
-    background-color: #218838;
+.event-register-container .event-register-form .submit-btn:hover {
+  background-color: #218838;
 }
 
+/* 補足説明 */
 .event-register-container .form-help-text {
-    font-size: 11px;
-    color: #666;
-    margin-left: 114px;
-    margin-top: 0px;
+  font-size: 11px;
+  color: #666;
+  margin-left: 114px;
+  margin-top: 0px;
 }
 
+/* 追加日程 */
 .event-register-container .additional-dates-container {
-    display: flex;
-    flex-direction: column;
-    width: 86%;  
+  display: flex;
+  flex-direction: column;
+  width: 86%;
 }
 
 .event-register-container .additional-date-entry {
-    display: flex;
-    align-items: center;
-    width: 100%;  
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .event-register-container .additional-date-entry input[type="date"] {
-    flex: 1 1 20%;
-    margin-right: 10px;
-    padding: 6px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+  flex: 1 1 20%;
+  margin-right: 10px;
 }
 
 .event-register-container .additional-date-entry input[name="additional_date_title"] {
-    flex: 1 1 30%;
-    margin-right: 10px;
-    padding: 6px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+  flex: 1 1 30%;
+  margin-right: 10px;
 }
 
 .event-register-container .additional-date-entry input[name="description"] {
-    flex: 2 1 50%;
-    margin-right: 10px;
-    padding: 6px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+  flex: 2 1 50%;
+  margin-right: 10px;
 }
 
-.event-register-container .additional-date-entry button {
-    padding: 8px;
-    margin-top: 0;
-    font-size: 12px;
-    height: 25px;
-    line-height: 1px;
-    flex-shrink: 0;
-    white-space: nowrap;
+.event-register-container .additional-date-entry input[type="date"],
+.event-register-container .additional-date-entry input[name="additional_date_title"],
+.event-register-container .additional-date-entry input[name="description"] {
+  padding: 6px;
+  font-size: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
 }
 
-.event-register-container .add-date-button, .add-cast-button,
-.event-register-container .remove-date-button {
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* ボタン共通 */
+.event-register-container .additional-date-entry button,
+.event-register-container .add-date-button,
+.event-register-container .remove-date-button,
+.event-register-container .cast-entry button,
+.event-register-container .add-cast-button,
+.event-register-container .remove-cast-button {
+  padding: 8px;
+  font-size: 12px;
+  height: 25px;
+  line-height: 1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+  color: white;
 }
 
+/* 追加日程ボタン */
 .event-register-container .add-date-button {
     background-color: #007bff;
-    width: 25px;
-    height: 25px;
-    border-radius: 25px;
-    line-height: 1px;
-    margin: 0px auto;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
-
 .event-register-container .add-date-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* 追加日程削除ボタン */
 .event-register-container .remove-date-button {
-    background-color: #dc3545;
+  background-color: #dc3545;
 }
-
 .event-register-container .remove-date-button:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
+/* 出演者 */
 .event-register-container .casts-container {
-    display: flex;
-    flex-direction: column;
-    width: 86%;
+  display: flex;
+  flex-direction: column;
+  width: 86%;
 }
 
 .event-register-container .cast-entry {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .event-register-container .cast-entry input[name="role"] {
-    flex: 1 1 30%;
-    margin-right: 10px;
-    padding: 6px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+  flex: 1 1 30%;
+  margin-right: 10px;
+  padding: 6px;
+  font-size: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
 }
 
 .event-register-container .cast-entry input[name="name"] {
-    flex: 2 1 70%;
-    margin-right: 10px;
-    padding: 6px;
-    font-size: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+  flex: 2 1 70%;
+  margin-right: 10px;
+  padding: 6px;
+  font-size: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
 }
 
-.event-register-container .cast-entry button {
-    padding: 8px;
-    margin-top: 0;
-    font-size: 12px;
-    height: 25px;
-    line-height: 1px;
-    flex-shrink: 0;
-    white-space: nowrap;
-}
-
+/* 出演者追加ボタン */
 .event-register-container .add-cast-button {
     background-color: #007bff;
-    width: 25px;
-    height: 25px;
-    border-radius: 25px;
-    line-height: 1px;
-    margin: 0px auto;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
-
 .event-register-container .add-cast-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+/* 出演者削除ボタン */
 .event-register-container .remove-cast-button {
-    background-color: #dc3545;
+  background-color: #dc3545;
+}
+.event-register-container .remove-cast-button:hover {
+  background-color: #c82333;
 }
 
-.event-register-container .remove-cast-button:hover {
-    background-color: #c82333;
+/* オプション */
+.event-register-container .options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 14px;
 }
 
 .event-register-container .option-label {
-    width: auto;
-    display: flex;
-    align-items: center;
-}
-
-.event-register-container .options-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 14px;
+  width: auto;
+  display: flex;
+  align-items: center;
 }
 
 .event-register-container .option-label input[type="checkbox"] {
-    margin-right: 5px;
-    vertical-align: middle;
+  margin-right: 5px;
 }
+
+/* 会場選択ボタン */
+.event-register-container .venue-modal-open-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.event-register-container .venue-modal-open-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ------------------ 会場選択モーダル ------------------ */
+
+.event-register-container .modal-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.event-register-container .modal-content h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+}
+
+.event-register-container .modal-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.event-register-container .modal-filters input[type="text"] {
+  padding: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.event-register-container .modal-filters .prefecturs-select {
+  width: 120px;
+}
+
+.event-register-container .modal-venue-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+.event-register-container .modal-venue-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.event-register-container .modal-venue-item:hover {
+  background-color: #f9f9f9;
+}
+
+.event-register-container .modal-close-btn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+  display: block;
+  margin:10px auto;
+}
+
+.event-register-container .modal-close-btn:hover {
+  background-color: #c82333;
+}
+
+
+.event-register-container .modal-reset-btn {
+    background-color:#333;
+    color: #fff;
+    border: none;
+    padding: 4px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block;
+    margin:0px auto;
+  }

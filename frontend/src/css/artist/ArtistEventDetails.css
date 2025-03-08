@@ -1,0 +1,158 @@
+.artist-event-detail-container {
+    padding: 15px;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 8px;
+  }
+  
+  .artist-event-detail-container h1 {
+    width: 100%;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 左右レイアウトのためのラッパー要素 */
+  .artist-event-detail-container .event-detail-columns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  /* 左カラム（フライヤー） */
+  .artist-event-detail-container .flyer-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    padding: 10px;
+  }
+  
+  .artist-event-detail-container .flyer-section {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* フライヤー画像のレスポンシブ対応 */
+  .artist-event-detail-container .flyer-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* フライヤー切り替えボタン */
+  .artist-event-detail-container .flyer-navigation {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .artist-event-detail-container .flyer-navigation .nav-button {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 4px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .artist-event-detail-container .flyer-navigation .nav-button:hover {
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+  }
+  
+  /* 右カラム（イベント情報テーブル） */
+  .artist-event-detail-container .event-info-container {
+    flex: 2;
+    padding: 10px;
+  }
+  
+  /* イベント情報テーブル */
+  .artist-event-detail-container .event-info-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .artist-event-detail-container .event-info-table th,
+  .artist-event-detail-container .event-info-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  
+  .artist-event-detail-container .event-info-table th {
+    background-color: #f7f7f7;
+    width: 25%;
+  }
+  
+  /* ボタンアクション部分 */
+
+  
+  .artist-event-detail-container .back-button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .artist-event-detail-container .back-button:hover {
+    background-color: #0056b3;
+  }
+
+  
+  
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    .artist-event-detail-container .flyer-container {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  
+    .artist-event-detail-container .event-detail-columns {
+      flex-direction: column;
+    }
+  }
+  
+  /* ポップアップ用のスタイル */
+  .artist-event-detail-container .flyer-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .artist-event-detail-container .flyer-popup-image {
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+  }
+  
+  /* オプションバッジのスタイル */
+  .artist-event-detail-container .options-container .option-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  

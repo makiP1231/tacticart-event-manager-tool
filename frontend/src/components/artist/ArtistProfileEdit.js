@@ -1,3 +1,4 @@
+// ArtistProfileEdit.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArtistSidebar from './ArtistSidebar';
@@ -41,19 +42,55 @@ function ArtistProfileEdit() {
     const ARTIST_PROFILE_IMAGE_PATH = process.env.REACT_APP_ARTIST_PROFILE_IMAGE_PATH;
 
     useEffect(() => {
-        const fetchProfileData = async (userId) => {
+        // セッションを確認して、アーティスト用のIDを取得
+        const fetchSessionData = async () => {
             try {
-                const response = await fetch(`${API_URL}/api/artists/${userId}`, {
+                const sessionResponse = await fetch(`${API_URL}/api/session`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const sessionData = await sessionResponse.json();
+
+                // userType が 'artist' の場合にプロフィール情報を取得
+                if (sessionResponse.ok && sessionData.userType === 'artist') {
+                    // アーティストIDを使ってプロフィール取得
+                    fetchProfileData(sessionData.userId);
+                    fetchPartsData(); // パートのマスターデータを取得
+                } else {
+                    throw new Error('No active artist session found');
+                }
+            } catch (error) {
+                console.error('Error fetching session data:', error);
+                setError(error.message);
+            }
+        };
+
+        // アーティストのプロフィール情報を取得
+        const fetchProfileData = async (artistId) => {
+            try {
+                const response = await fetch(`${API_URL}/api/artists/${artistId}`, {
                     method: 'GET',
                     credentials: 'include'
                 });
                 const data = await response.json();
                 if (response.ok) {
+                    // partsが文字列の場合は配列にパースする
+                    if (typeof data.parts === 'string') {
+                        try {
+                            data.parts = JSON.parse(data.parts);
+                        } catch (e) {
+                            console.error('Error parsing parts JSON:', e);
+                            data.parts = [];
+                        }
+                    }
+
                     setProfileData(data);
+
+                    // プロフィール画像がある場合は表示用にセット
                     if (data.profile_picture) {
                         setCurrentProfilePicture(`${API_URL}${ARTIST_PROFILE_IMAGE_PATH}/${data.profile_picture}`);
                     }
-                    // 生年月日を設定
+                    // 生年月日の初期値をセット
                     if (data.birth_year) setBirthYear(data.birth_year);
                     if (data.birth_month) setBirthMonth(data.birth_month);
                     if (data.birth_day) setBirthDay(data.birth_day);
@@ -65,26 +102,8 @@ function ArtistProfileEdit() {
                 setError(error.message);
             }
         };
-    
-        const fetchSessionData = async () => {
-            try {
-                const sessionResponse = await fetch(`${API_URL}/api/session`, {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-                const sessionData = await sessionResponse.json();
-                if (sessionResponse.ok && sessionData.role === 'artist') {
-                    fetchProfileData(sessionData.userId);
-                    fetchPartsData(); // パートのデータを取得
-                } else {
-                    throw new Error('No active session found');
-                }
-            } catch (error) {
-                console.error('Error fetching session data:', error);
-                setError(error.message);
-            }
-        };
-    
+
+        // パートのマスターデータを取得
         const fetchPartsData = async () => {
             try {
                 const response = await fetch(`${API_URL}/api/parts`, {
@@ -102,10 +121,9 @@ function ArtistProfileEdit() {
                 setError(error.message);
             }
         };
-    
+
         fetchSessionData();
     }, [API_URL, ARTIST_PROFILE_IMAGE_PATH]);
-    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -182,11 +200,14 @@ function ArtistProfileEdit() {
         }
     };
 
+    // パートをクリックしたときの処理
     const handlePartClick = (partValue) => {
         const index = profileData.parts.indexOf(partValue);
         if (index === -1) {
+            // 未選択なら追加
             setProfileData({ ...profileData, parts: [...profileData.parts, partValue] });
         } else {
+            // 選択済みなら削除
             const newParts = [...profileData.parts];
             newParts.splice(index, 1);
             setProfileData({ ...profileData, parts: newParts });
@@ -199,17 +220,23 @@ function ArtistProfileEdit() {
             const response = await fetch(`${API_URL}/api/artists/profile`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...profileData, birth_year: birthYear, birth_month: birthMonth, birth_day: birthDay }),
+                body: JSON.stringify({
+                    ...profileData,
+                    birth_year: birthYear,
+                    birth_month: birthMonth,
+                    birth_day: birthDay
+                }),
                 credentials: 'include'
             });
-    
+
             const data = await response.json();
             if (response.ok) {
-                setStatusMessage('プロフィールが更新されました'); // ステータスメッセージを設定
+                setStatusMessage('プロフィールが更新されました');
                 setTimeout(() => setStatusMessage(''), 3000); // 3秒後にメッセージを消す
             } else {
                 if (response.status === 409) {
-                    setEmailError(data.message); // メールアドレスの重複エラーメッセージを設定
+                    // メールアドレス重複
+                    setEmailError(data.message);
                 } else {
                     throw new Error(data.message || 'Failed to update profile');
                 }
@@ -219,7 +246,6 @@ function ArtistProfileEdit() {
             setError(error.message);
         }
     };
-    
 
     const getProfilePictureBackground = () => {
         switch (profileData.gender) {
@@ -240,10 +266,16 @@ function ArtistProfileEdit() {
                     {currentProfilePicture ? (
                         <div className="profile-picture-wrapper">
                             <img src={currentProfilePicture} alt="Profile" className="profile-picture-preview" />
-                            <button type="button" onClick={() => document.getElementById('fileInput').click()} className="profile-picture-button">
+                            <button
+                                type="button"
+                                onClick={() => document.getElementById('fileInput').click()}
+                                className="profile-picture-button"
+                            >
                                 プロフィール画像を変更
                             </button>
-                            <a href="#!" onClick={handleDeleteProfilePicture} className="delete-profile-picture">削除</a>
+                            <a href="#!" onClick={handleDeleteProfilePicture} className="delete-profile-picture">
+                                削除
+                            </a>
                         </div>
                     ) : (
                         <div
@@ -256,7 +288,11 @@ function ArtistProfileEdit() {
                     )}
                     <input id="fileInput" type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
                     {!currentProfilePicture && (
-                        <button type="button" onClick={() => document.getElementById('fileInput').click()} className="profile-picture-button">
+                        <button
+                            type="button"
+                            onClick={() => document.getElementById('fileInput').click()}
+                            className="profile-picture-button"
+                        >
                             プロフィール画像を追加
                         </button>
                     )}
@@ -276,12 +312,19 @@ function ArtistProfileEdit() {
                     <div className="form-group">
                         <label>パート</label>
                         <div className="parts-display">
-                            {profileData.parts.map(part => (
+                            {profileData.parts.map((part) => (
                                 <span key={part} className="part-badge">
-                                    {parts.find(p => p.value === part)?.label}
+                                    {/* parts配列のvalueに合致するlabelを表示 */}
+                                    {parts.find((p) => p.value === part)?.label}
                                 </span>
                             ))}
-                            <button type="button" onClick={() => setShowPartsModal(true)} className="edit-parts-button">パートを編集</button>
+                            <button
+                                type="button"
+                                onClick={() => setShowPartsModal(true)}
+                                className="edit-parts-button"
+                            >
+                                パートを編集
+                            </button>
                         </div>
                     </div>
                     <div className="form-group">
@@ -298,7 +341,12 @@ function ArtistProfileEdit() {
                     {emailError && <p className="email-error" style={{ color: 'red' }}>{emailError}</p>}
                     <div className="form-group">
                         <label>性別</label>
-                        <select name="gender" className="gender-selects" value={profileData.gender || ''} onChange={handleChange}>
+                        <select
+                            name="gender"
+                            className="gender-selects"
+                            value={profileData.gender || ''}
+                            onChange={handleChange}
+                        >
                             <option value="">未設定</option>
                             <option value="male">男性</option>
                             <option value="female">女性</option>
@@ -308,7 +356,12 @@ function ArtistProfileEdit() {
                     <div className="form-group">
                         <label>生年月日</label>
                         <div className="birthdate-select">
-                            <select name="birthYear" className="birthday-set" value={birthYear} onChange={handleBirthdateChange}>
+                            <select
+                                name="birthYear"
+                                className="birthday-set"
+                                value={birthYear}
+                                onChange={handleBirthdateChange}
+                            >
                                 <option value="">年</option>
                                 {Array.from({ length: 100 }, (_, i) => (
                                     <option key={i} value={new Date().getFullYear() - i}>
@@ -316,7 +369,12 @@ function ArtistProfileEdit() {
                                     </option>
                                 ))}
                             </select>
-                            <select name="birthMonth" className="birthday-set" value={birthMonth} onChange={handleBirthdateChange}>
+                            <select
+                                name="birthMonth"
+                                className="birthday-set"
+                                value={birthMonth}
+                                onChange={handleBirthdateChange}
+                            >
                                 <option value="">月</option>
                                 {Array.from({ length: 12 }, (_, i) => (
                                     <option key={i + 1} value={i + 1}>
@@ -324,7 +382,12 @@ function ArtistProfileEdit() {
                                     </option>
                                 ))}
                             </select>
-                            <select name="birthDay" className="birthday-set" value={birthDay} onChange={handleBirthdateChange}>
+                            <select
+                                name="birthDay"
+                                className="birthday-set"
+                                value={birthDay}
+                                onChange={handleBirthdateChange}
+                            >
                                 <option value="">日</option>
                                 {Array.from({ length: 31 }, (_, i) => (
                                     <option key={i + 1} value={i + 1}>
@@ -447,19 +510,28 @@ function ArtistProfileEdit() {
                                 {parts.map(part => (
                                     <label
                                         key={part.value}
-                                        className={profileData.parts.includes(part.value)
-                                            ? profileData.parts[0] === part.value ? 'main-part' : 'sub-part'
-                                            : ''}
+                                        className={
+                                            profileData.parts.includes(part.value)
+                                                ? profileData.parts[0] === part.value
+                                                    ? 'main-part'
+                                                    : 'sub-part'
+                                                : ''
+                                        }
                                         onClick={() => handlePartClick(part.value)}
                                     >
                                         {part.label}
                                     </label>
                                 ))}
-                                <label onClick={() => setProfileData({ ...profileData, parts: [] })} className="reset-button">
+                                <label
+                                    onClick={() => setProfileData({ ...profileData, parts: [] })}
+                                    className="reset-button"
+                                >
                                     リセット
                                 </label>
                             </div>
-                            <button onClick={() => setShowPartsModal(false)} className="close-button">閉じる</button>
+                            <button onClick={() => setShowPartsModal(false)} className="close-button">
+                                閉じる
+                            </button>
                         </div>
                     </div>
                 )}

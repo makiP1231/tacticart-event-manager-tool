@@ -1,11 +1,11 @@
+// Sidebar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth'; // useAuthフックをインポート
-import '../../css/admin/Dashboard.css'; 
+import { useAuth } from '../../contexts/AuthContext';  // AuthContextからuseAuthをインポート
 
 function Sidebar() {
     const navigate = useNavigate();
-    const { user } = useAuth(); // userオブジェクトを取得
+    const { user } = useAuth();  // useAuthを使用してセッション情報を取得
 
     const handleLogout = async () => {
         try {
@@ -14,12 +14,11 @@ function Sidebar() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include' // クロスオリジンでのクッキー送信を許可
+                credentials: 'include'
             });
             const data = await response.json();
             if (response.ok) {
-                console.log('Logout successful:', data);
-                navigate(data.redirect); // ログアウト後は管理者ログインページにリダイレクト
+                navigate(data.redirect);
             } else {
                 throw new Error('Logout failed');
             }
@@ -30,34 +29,47 @@ function Sidebar() {
 
     return (
         <div className="sidebar">
-            <h3>管理者メニュー</h3>
+            <div className="sidebar-label">アーティスト管理</div>
             <ul>
-                <li><Link to="/admin-dashboard/artists">アーティスト</Link>
-                    <ul>
-                        <li><Link to="/admin-dashboard/artists/register">アーティスト登録</Link></li>
-                        <li><Link to="/admin-dashboard/artists/list">アーティスト一覧</Link></li>
-                        <li><Link to="/admin-dashboard/artists/group">グループ設定</Link></li>
-                    </ul>
-                </li>
-                <li><Link to="/admin-dashboard/events">イベント</Link>
-                    <ul>
-                        <li><Link to="/admin-dashboard/events/register">イベント登録</Link></li>
-                        <li><Link to="/admin-dashboard/events">イベント一覧</Link></li>
-                    </ul>
-                </li>
-                <li><Link to="/admin-dashboard/messages">メッセージ</Link></li>
-                <li><Link to="/admin-dashboard/casting">キャスティング</Link>
-                    <ul>
-                        <li><Link to="/admin-dashboard/casting/hold">仮押さえ</Link></li>
-                        <li><Link to="/admin-dashboard/casting/contract">本契約</Link></li>
-                    </ul>
-                </li>
-                <li><Link to="/admin-dashboard/profile-edit">プロフィール編集</Link></li>
-                {user && user.role === 'admin' && (
-                    <li><Link to="/admin-dashboard/admin-setup">管理者の追加</Link></li>
-                )}
-                <li onClick={handleLogout} style={{ cursor: 'pointer' }}>ログアウト</li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/artists/register">アーティスト登録</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/artists/list">アーティスト一覧</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/artists/group">グループ設定</Link></li>
             </ul>
+
+            <div className="sidebar-label">イベント管理</div>
+            <ul>
+                <li className="sidebar-item"><Link to="/admin-dashboard/events/register">イベント登録</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/events">イベント一覧</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/venues/register">会場登録</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/venues">会場一覧</Link></li>
+            </ul>
+
+            <div className="sidebar-label">メッセージ</div>
+            <ul>
+              <li className="sidebar-item"><Link to="/admin-dashboard/messages">個別メッセージ</Link></li>
+            </ul>
+
+            <div className="sidebar-label">キャスティング</div>
+            <ul>
+                <li className="sidebar-item"><Link to="/admin-dashboard/casting/hold">仮押さえ申請</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/casting/history">仮押さえ履歴</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/contract/form">本契約申請</Link></li>
+                <li className="sidebar-item"><Link to="/admin-dashboard/contract/history">本契約履歴</Link></li>
+            </ul>
+
+            <div className="sidebar-label">システム設定</div>
+            <ul>
+                <li className="sidebar-item"><Link to="/admin-dashboard/profile-edit">プロフィール編集</Link></li>
+                {user && user.userType === 'admin' && user.permissions === 'admin' && (
+                <div>
+                    <ul>
+                        <li className="sidebar-item"><Link to="/admin-dashboard/account-management">アカウント管理</Link></li>
+                    </ul>
+                </div>
+            )}
+            </ul>
+
+            <li className="sidebar-item logout" onClick={handleLogout}>ログアウト</li>
         </div>
     );
 }
